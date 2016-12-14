@@ -1,0 +1,136 @@
+#!/bin/bash
+
+#
+#	Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#
+#	Bos
+#
+
+main()
+{
+	find_base_dir
+	read_headers $@ &&
+#	process_arguments $@ &&
+	print_info &&
+	check_locations &&
+
+	create_images &&
+	mount_images &&
+	prepare_chroot &&
+	rebuild_toolchain &&
+#!!	build_system &&
+#	build_X11 &&
+#	build_kernels &&
+
+#	finalize &&
+#	construct_initrd &&
+	echo done
+}
+
+find_base_dir()
+{
+	local THIS_DIR=$PWD
+	local EXE_DIR=`dirname $0`
+	cd $EXE_DIR/..
+	BASE_DIR=`pwd`
+	cd $THIS_DIR
+	export PATH=$PATH:$BASE_DIR/lib/bin
+}
+
+read_headers()
+{
+	if [ $# -ne 1 ]
+	then
+		echo "Usage: bos <config file>"
+		exit 1
+	fi
+
+	#source $BASE_DIR/etc/bos.conf
+
+	if [ -f $1 ]
+	then
+		PROJECT=$1
+		source $PROJECT
+		source $BASE_DIR/etc/bos.conf
+	else
+		echo "bos: invalid or nonexistant configuration file"
+		exit 1
+	fi
+}
+
+process_arguments()
+{
+	if [ $# -ne 2 ]
+	then
+		echo "Usage: bos <package source> <target iso>"
+		exit 1
+	fi
+
+	SOURCE=$1
+	TARGET=$2
+}
+
+print_info()
+{
+	echo bos: base directory: $BASE_DIR
+	echo bos: namespace:      $NAMESPACE
+	echo bos: script dir:     $SCRIPT_SRC_DIR
+	echo bos: resource dir:   $GEN_SRC_DIR
+}
+
+check_locations()
+{
+	cd $BASE_DIR
+}
+
+create_images()
+{
+	echo "Creating images"
+
+	${SCRIPT_SRC_DIR}/1_CreateImages.sh $PROJECT
+}
+
+mount_images()
+{
+	echo "Mounting images via loopback"
+	su -c $SCRIPT_SRC_DIR/2_MountImages.sh\ $PROJECT
+}
+
+prepare_chroot()
+{
+	echo "Chrooting into and preparing image"
+#	su -c $SCRIPT_SRC_DIR/3a_BuildTools.sh\ $PROJECT
+	su -c $SCRIPT_SRC_DIR/3_PrepareChroot.sh\ $PROJECT
+}
+
+rebuild_toolchain()
+{
+	echo "Rebuilding the toolchain"
+	su -c $SCRIPT_SRC_DIR/4_RebuildToolchain.sh\ $PROJECT
+}
+
+build_system()
+{
+	echo "Building the system"
+	su -c $SCRIPT_SRC_DIR/5_BuildSystem.sh\ $PROJECT
+}
+
+build_kernels()
+{
+	echo "Building kernels"
+	su -c $SCRIPT_SRC_DIR/6_BuildKernels.sh\ $PROJECT
+}
+
+finalize()
+{
+	echo "Finalizing images"
+	su -c $SCRIPT_SRC_DIR/7_Finalize.sh\ $PROJECT
+}
+
+construct_initrd()
+{
+	echo "Constructing initrd"
+	su -c $SCRIPT_SRC_DIR/8_ConstructInitrd.sh\ $PROJECT
+}
+
+main $@

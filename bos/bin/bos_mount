@@ -1,0 +1,81 @@
+#!/bin/bash
+
+#
+#       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#
+#
+#	Bos::mount
+#
+
+main()
+{
+	find_base_dir
+	read_headers $@ &&
+	print_info &&
+	check_locations &&
+
+	printf "bos_mount: "
+	mount_images
+	if [ $? -eq 0 ]
+	then
+		printf " done\n"
+	else
+		printf " error\n"
+		return -1
+	fi
+}
+
+find_base_dir()
+{
+	local THIS_DIR=$PWD
+	local EXE_DIR=`dirname $0`
+	cd $EXE_DIR/..
+	BASE_DIR=`pwd`
+	cd $THIS_DIR
+	export PATH=$PATH:$BASE_DIR/lib/bin
+}
+
+read_headers()
+{
+	if [ $# -ne 1 ]
+	then
+		echo "Usage: bos <config file>"
+		exit 1
+	fi
+
+	#source $BASE_DIR/etc/bos.conf
+
+	if [ -f $1 ]
+	then
+		PROJECT_DIR=`dirname $1`
+		PROJECT=$1
+		source $PROJECT
+		source $BASE_DIR/etc/bos.conf
+		LOG=$TARGET/log/mount.log
+		echo "" > $LOG
+	else
+		echo "bos: invalid or nonexistant configuration file"
+		exit 1
+	fi
+}
+
+print_info()
+{
+	echo bos_mount: base directory: $BASE_DIR  >> $LOG 2>&1
+	echo bos_mount: namespace:      $NAMESPACE >> $LOG 2>&1
+}
+
+check_locations()
+{
+	cd $BASE_DIR
+}
+
+mount_images()
+{
+	#echo "Mounting images via loopback"
+#	Why am I SUing here?
+#	su -c PATH=/system/software/bin\ $SCRIPT_SRC_DIR/2_MountImages.sh\ $PROJECT
+	$SCRIPT_SRC_DIR/2_MountImages.sh $PROJECT
+}
+
+main $@
