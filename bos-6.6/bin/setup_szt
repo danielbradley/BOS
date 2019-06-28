@@ -1,0 +1,79 @@
+#!/system/software/bin/bash
+
+if [ ! -d "/etc" ]
+then
+	mkdir -p /etc
+fi
+
+if [ ! -L "/etc/passwd" ]
+then
+	ln -s /local/settings/lsb/passwd /etc/passwd
+fi
+
+if [ ! -d "/bin" ]
+then
+	mkdir /bin
+fi
+
+if [ ! -L "/bin/bash" ]
+then
+	ln -s /system/software/bin/bash /bin/bash
+fi
+
+if [ ! -L "/bin/pwd" ]
+then
+	ln -s /system/software/bin/pwd /bin/pwd
+fi
+
+if [ ! -L "/bin/sh" ]
+then
+	ln -s /system/software/bin/bash /bin/sh
+fi
+
+if [ ! -L "/bin/rm" ]
+then
+	ln -s /system/software/bin/rm /bin/rm
+fi
+
+if [ ! -d "/dev" ]
+then
+	mkdir /dev
+fi
+
+if [ ! -L "/dev/null" ]
+then
+	ln -s /system/devices/null /dev/null
+fi
+
+if [ ! -L "/tmp" ]
+then
+	ln -s /system/mounts/TEMP /tmp
+fi
+
+if [ ! -d "/usr" ]
+then
+	mkdir /usr
+fi
+
+if [ ! -L /usr/include ]
+then
+	ln -s /system/software/include /usr/include
+fi
+
+if [ ! -L /usr/lib ]
+then
+	ln -s /system/software/lib /usr/lib
+fi
+
+if [ ! -L /lib ]
+then
+	# Imageinfo compiled against /lib/ld-linux.so.2
+	ln -s /system/software/lib /lib
+fi
+
+if [ ! -L /opt ]
+then
+	PARENT=`dirname "$PWD"`
+	ln -s "$PARENT/libexec" /opt
+fi
+
