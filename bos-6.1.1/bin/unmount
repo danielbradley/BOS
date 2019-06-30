@@ -1,0 +1,105 @@
+#!/bin/bash
+
+#
+#       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#
+#
+#	Umount
+#
+
+VAR_DIR=""	# From BOS conf
+NAMESPACE=""	# From BOS conf
+
+# Commands
+
+LOSETUP=`which losetup`
+UMOUNT=`which umount`
+
+main()
+{
+	local BaseDir=`find_base_dir` &&
+	read_headers "${BaseDir}" &&
+	local MountPoint=`process_arguments "${VAR_DIR}" "${NAMESPACE}" "$@"` &&
+	unmount_images "${MountPoint}"
+	if [ $? -eq 0 ]
+	then
+		echo done
+	else
+		echo error during dismount
+	fi
+}
+
+find_base_dir()
+{
+	local ThisDir="${PWD}"
+	local ExeDir=`dirname $0`
+	cd "${ExeDir}"/..
+	local BaseDir=`pwd`
+	cd "${ThisDir}"
+	echo "${BaseDir}"
+}
+
+read_headers()
+{
+	local BaseDir="$1"
+
+	BASE_DIR="${BaseDir}"
+	source "${BaseDir}"/etc/bos.conf
+}
+
+process_arguments()
+{
+	local VarDir="$1"
+	local Namespace="$2"
+	local Target="$3"
+
+	if [ $# -ne 3 ]
+	then
+		echo "Usage: bos <target iso>"
+		exit 1
+	fi
+
+	local ImageName=`basename "${Target}"` &&
+	echo "${VarDir}"/"${Namespace}"/"${ImageName}"
+}
+
+unmount_images()
+{
+	local MountPoint="$1"
+
+	"${UMOUNT}"    "${MountPoint}"/system/devices/pts
+	"${UMOUNT}"    "${MountPoint}"/system/devices/shm
+	"${UMOUNT}"    "${MountPoint}"/system/devices
+	"${UMOUNT}" -d "${MountPoint}"/local
+	"${UMOUNT}" -d "${MountPoint}"/mnt
+	"${UMOUNT}" -d "${MountPoint}"/system/features/*
+	"${UMOUNT}" -d "${MountPoint}"/system/mounts/*
+	"${UMOUNT}" -d "${MountPoint}"/system/processes
+	"${UMOUNT}" -d "${MountPoint}"/system
+	"${UMOUNT}" -d "${MountPoint}"/tools
+	"${UMOUNT}" -d "${MountPoint}"
+	"${UMOUNT}" -d /tools
+
+	local Dev=/dev
+
+	if [ ! -f ${Dev}/loop0 ]
+	then
+		Dev=/system/devices
+	fi &&
+
+	"${LOSETUP}" -d ${Dev}/loop0
+	"${LOSETUP}" -d ${Dev}/loop1
+	"${LOSETUP}" -d ${Dev}/loop2
+	"${LOSETUP}" -d ${Dev}/loop3
+	"${LOSETUP}" -d ${Dev}/loop4
+	"${LOSETUP}" -d ${Dev}/loop5
+	"${LOSETUP}" -d ${Dev}/loop6
+	"${LOSETUP}" -d ${Dev}/loop7
+	"${LOSETUP}" -d ${Dev}/loop8
+	"${LOSETUP}" -d ${Dev}/loop9
+	"${LOSETUP}" -d ${Dev}/loop10
+	"${LOSETUP}" -d ${Dev}/loop11
+	"${LOSETUP}" -d ${Dev}/loop12
+}
+
+main "$@"

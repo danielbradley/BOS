@@ -1,0 +1,77 @@
+#!/bin/bash
+
+#
+#       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#
+#
+#	Bos::build system
+#
+
+main()
+{
+	find_base_dir
+	read_headers $@ &&
+#	print_info &&
+	check_locations &&
+
+	build_desktop
+	if [ $? -ne 0 ]
+	then
+		printf "bos_build_desktop: error building desktop\n"
+		return 1
+	fi
+	echo done
+}
+
+find_base_dir()
+{
+	local THIS_DIR=$PWD
+	local EXE_DIR=`dirname $0`
+	cd $EXE_DIR/..
+	BASE_DIR=`pwd`
+	cd $THIS_DIR
+	export PATH=$PATH:$BASE_DIR/lib/bin
+}
+
+read_headers()
+{
+	if [ $# -ne 1 ]
+	then
+		echo "Usage: bos <config file>"
+		exit 1
+	fi
+
+	#source $BASE_DIR/etc/bos.conf
+
+	if [ -f $1 ]
+	then
+		PROJECT_DIR=`dirname $1`
+		PROJECT=$1
+		source $PROJECT
+		source $BASE_DIR/etc/bos.conf
+	else
+		echo "bos: invalid or nonexistant configuration file"
+		exit 1
+	fi
+}
+
+print_info()
+{
+	echo bos: base directory: $BASE_DIR
+	echo bos: namespace:      $NAMESPACE
+	echo bos: script dir:     $SCRIPT_SRC_DIR
+	echo bos: resource dir:   $GEN_SRC_DIR
+}
+
+check_locations()
+{
+	cd $BASE_DIR
+}
+
+build_desktop()
+{
+	echo "Building the desktop"
+	su -c $SCRIPT_SRC_DIR/5b_BuildDesktop.sh\ $PROJECT
+}
+
+main $@

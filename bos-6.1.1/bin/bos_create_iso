@@ -1,0 +1,78 @@
+#!/bin/bash
+
+#
+#       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#
+#
+#	Bos::create_iso
+#
+
+main()
+{
+	find_base_dir
+	read_headers $@ &&
+#	print_info &&
+	check_locations &&
+
+	printf "bos_create_iso: "
+	create_iso
+	if [ $? == 0 ]
+	then
+		printf " done\n"
+	else
+		printf " error\n"
+	fi
+}
+
+find_base_dir()
+{
+	local THIS_DIR=$PWD
+	local EXE_DIR=`dirname $0`
+	cd $EXE_DIR/..
+	BASE_DIR=`pwd`
+	cd $THIS_DIR
+	export PATH=$PATH:$BASE_DIR/lib/bin
+}
+
+read_headers()
+{
+	if [ $# -ne 1 ]
+	then
+		echo "Usage: bos <config file>"
+		exit 1
+	fi
+
+	#source $BASE_DIR/etc/bos.conf
+
+	if [ -f $1 ]
+	then
+		PROJECT_DIR=`dirname $1`
+		PROJECT=$1
+		source $PROJECT
+		source $BASE_DIR/etc/bos.conf
+	else
+		echo "bos: invalid or nonexistant configuration file"
+		exit 1
+	fi
+}
+
+print_info()
+{
+	echo bos: base directory: $BASE_DIR
+	echo bos: namespace:      $NAMESPACE
+	echo bos: script dir:     $SCRIPT_SRC_DIR
+	echo bos: resource dir:   $GEN_SRC_DIR
+}
+
+check_locations()
+{
+	cd $BASE_DIR
+}
+
+create_iso()
+{
+#	echo "Chrooting into and preparing image"
+	su -c PATH=/system/software/bin:/bin:/opt/schily/bin\ $SCRIPT_SRC_DIR/X0_CreateISO.sh\ $PROJECT
+}
+
+main $@
