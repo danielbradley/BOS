@@ -104,8 +104,7 @@ install_package()
 			cd $BUILD_DIR/$PACKAGE-build &&
 			mkdir -v $GNU_PREFIX/etc
 			touch $GNU_PREFIX/etc/ld.so.conf
-			#echo "111.125.177.87 www.securizant.org" > 
-$GNU_PREFIX/etc/hosts
+			#echo "111.125.177.87 www.securizant.org" > $GNU_PREFIX/etc/hosts
 			cp $PROJECT_DIR/resources/static/default_settings/2008/users/passwd $GNU_PREFIX/etc/passwd
 			make install &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
