@@ -65,7 +65,7 @@ rebuild_toolchain()
 #	mkdir -p $MOUNT_POINT/$TC_BUILD_DIR &&
 #	chmod 1777 $MOUNT_POINT/$TC_BUILD_DIR &&
 
-#	echo "35.189.51.245 cdn.securizant.org" > $MOUNT_POINT/system/default/settings/system/meta/hosts
+	echo "35.189.51.245 cdn.securizant.org" > $MOUNT_POINT/system/default/settings/system/meta/hosts
 
 	chmod 644 $MOUNT_POINT/local/settings/system/meta/*
 	ln -sf ../system/meta/hosts $MOUNT_POINT/local/settings/lsb
