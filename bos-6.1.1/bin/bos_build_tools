@@ -18,7 +18,10 @@ main()
 	mount_image &&
 
 #	echo "Retrieving packages from $RESOURCE_URL"
-	build_tools
+	build_tools &&
+
+	cp /local/settings/lsb/resolv.conf /tools/etc
+	
 #	echo done
 }
 	
