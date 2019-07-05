@@ -50,6 +50,7 @@ read_headers()
 		PROJECT_DIR=`dirname $1`
 		source $PROJECT
 		source $BASE_DIR/etc/bos.conf
+		mkdir -p $TARGET/log
 		LOG=$TARGET/log/create.log
 		echo "" > $LOG
 	else
