@@ -9,13 +9,12 @@
 
 main()
 {
-	find_base_dir
-	read_headers $@ &&
-	print_info &&
-	check_locations &&
-
-	printf "bos_mount: "
-	mount_images
+	find_base_dir        &&
+	read_headers $@      &&
+	print_info           &&
+	check_locations      &&
+	printf "bos_mount: " &&
+	mount_images         &&
 	if [ $? -eq 0 ]
 	then
 		printf " done\n"
@@ -43,14 +42,13 @@ read_headers()
 		exit 1
 	fi
 
-	#source $BASE_DIR/etc/bos.conf
-
 	if [ -f $1 ]
 	then
 		PROJECT_DIR=`dirname $1`
 		PROJECT=$1
 		source $PROJECT
 		source $BASE_DIR/etc/bos.conf
+
 		LOG=$TARGET/log/mount.log
 		echo "" > $LOG
 	else
