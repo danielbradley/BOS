@@ -69,7 +69,7 @@ unmount_images()
 
 	"${UMOUNT}"    "${MountPoint}"/system/devices/pts
 	"${UMOUNT}"    "${MountPoint}"/system/devices/shm
-	#"${UMOUNT}"    "${MountPoint}"/system/devices
+	"${UMOUNT}"    "${MountPoint}"/system/devices
 	#"${UMOUNT}" -d "${MountPoint}"/local
 	"${UMOUNT}" -d "${MountPoint}"/mnt
 	"${UMOUNT}" -d "${MountPoint}"/system/features/*
