@@ -69,11 +69,11 @@ unmount_images()
 
 	"${UMOUNT}"    "${MountPoint}"/system/devices/pts
 	"${UMOUNT}"    "${MountPoint}"/system/devices/shm
-	"${UMOUNT}"    "${MountPoint}"/system/devices
-	"${UMOUNT}" -d "${MountPoint}"/local
+	#"${UMOUNT}"    "${MountPoint}"/system/devices
+	#"${UMOUNT}" -d "${MountPoint}"/local
 	"${UMOUNT}" -d "${MountPoint}"/mnt
 	"${UMOUNT}" -d "${MountPoint}"/system/features/*
-	"${UMOUNT}" -d "${MountPoint}"/system/mounts/*
+	"${UMOUNT}" -d "${MountPoint}"/system/mounts/INITRD
 	"${UMOUNT}" -d "${MountPoint}"/system/processes
 	"${UMOUNT}" -d "${MountPoint}"/system
 	"${UMOUNT}" -d "${MountPoint}"/tools
@@ -85,21 +85,21 @@ unmount_images()
 	if [ ! -f ${Dev}/loop0 ]
 	then
 		Dev=/system/devices
-	fi &&
+	fi
 
-	"${LOSETUP}" -d ${Dev}/loop0
-	"${LOSETUP}" -d ${Dev}/loop1
-	"${LOSETUP}" -d ${Dev}/loop2
-	"${LOSETUP}" -d ${Dev}/loop3
-	"${LOSETUP}" -d ${Dev}/loop4
-	"${LOSETUP}" -d ${Dev}/loop5
-	"${LOSETUP}" -d ${Dev}/loop6
-	"${LOSETUP}" -d ${Dev}/loop7
-	"${LOSETUP}" -d ${Dev}/loop8
-	"${LOSETUP}" -d ${Dev}/loop9
-	"${LOSETUP}" -d ${Dev}/loop10
-	"${LOSETUP}" -d ${Dev}/loop11
-	"${LOSETUP}" -d ${Dev}/loop12
+	#"${LOSETUP}" -d ${Dev}/loop0
+	#"${LOSETUP}" -d ${Dev}/loop1
+	#"${LOSETUP}" -d ${Dev}/loop2
+	#"${LOSETUP}" -d ${Dev}/loop3
+	#"${LOSETUP}" -d ${Dev}/loop4
+	#"${LOSETUP}" -d ${Dev}/loop5
+	#"${LOSETUP}" -d ${Dev}/loop6
+	#"${LOSETUP}" -d ${Dev}/loop7
+	#"${LOSETUP}" -d ${Dev}/loop8
+	#"${LOSETUP}" -d ${Dev}/loop9
+	#"${LOSETUP}" -d ${Dev}/loop10
+	#"${LOSETUP}" -d ${Dev}/loop11
+	#"${LOSETUP}" -d ${Dev}/loop12
 }
 
 main "$@"
