@@ -21,6 +21,7 @@ main()
 	build_tools &&
 
 	cp /local/settings/lsb/resolv.conf /tools/etc
+    chmod 644 /tools/etc/resolv.conf
 	
 #	echo done
 }
