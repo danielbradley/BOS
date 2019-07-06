@@ -11,19 +11,15 @@
 
 main()
 {
-	printf "bos_build_tools: "
-	find_base_dir
-	check_args $@ &&
-	create_tools_image $IMAGE &&
-	mount_image &&
-
-#	echo "Retrieving packages from $RESOURCE_URL"
-	build_tools &&
-
-	cp /local/settings/lsb/resolv.conf /tools/etc
-    chmod 644 /tools/etc/resolv.conf
-	
-#	echo done
+	printf "bos_build_tools: " &&
+	find_base_dir              &&
+	check_args $@              &&
+	create_tools_image $IMAGE  &&
+	mount_image                &&
+	build_tools                &&
+	cp /local/settings/lsb/resolv.conf /tools/etc &&
+    chmod 644 /tools/etc/resolv.conf              &&
+	echo done
 }
 	
 build_tools()
