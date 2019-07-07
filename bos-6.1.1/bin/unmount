@@ -67,9 +67,9 @@ unmount_images()
 {
 	local MountPoint="$1"
 
-	"${UMOUNT}"    "${MountPoint}"/system/devices/pts
-	"${UMOUNT}"    "${MountPoint}"/system/devices/shm
-	"${UMOUNT}"    "${MountPoint}"/system/devices
+	#"${UMOUNT}"    "${MountPoint}"/system/devices/pts
+	#"${UMOUNT}"    "${MountPoint}"/system/devices/shm
+	#"${UMOUNT}"    "${MountPoint}"/system/devices
 	#"${UMOUNT}" -d "${MountPoint}"/local
 	"${UMOUNT}" -d "${MountPoint}"/mnt
 	"${UMOUNT}" -d "${MountPoint}"/system/features/*
@@ -77,7 +77,7 @@ unmount_images()
 	"${UMOUNT}" -d "${MountPoint}"/system/processes
 	"${UMOUNT}" -d "${MountPoint}"/system
 	"${UMOUNT}" -d "${MountPoint}"/tools
-	"${UMOUNT}" -d "${MountPoint}"
+	#"${UMOUNT}" -d "${MountPoint}"
 	"${UMOUNT}" -d /tools
 
 	local Dev=/dev
