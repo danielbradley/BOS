@@ -5,6 +5,13 @@
 #
 
 PATH=$PATH:/local/bos/checkouts/bos-1.2/lib/bin
+
+if [ "--mount" == "$1" ]
+then
+	MOUNT="TRUE"
+	shift
+fi 
+
 PROJECT_FILE="$1"
 
 if [ ! -f "$PROJECT_FILE" ]
@@ -20,13 +27,18 @@ else
 	./bos_build_tools     "$PROJECT_FILE" &&
 	./bos_create          "$PROJECT_FILE" &&
 	./bos_mount           "$PROJECT_FILE" &&
-	./bos_prepare         $PROJECT_FILE &&
-	./bos_build_toolchain $PROJECT_FILE &&
-	./bos_build_system    $PROJECT_FILE &&
-	./bos_build_initrd    $PROJECT_FILE &&
-	./bos_build_kernels   $PROJECT_FILE &&
-	./bos_finish          $PROJECT_FILE &&
-	./bos_create_iso      $PROJECT_FILE &&
+
+	if [ "TRUE" != "$MOUNT" ]
+	then
+		./bos_prepare         $PROJECT_FILE &&
+		./bos_build_toolchain $PROJECT_FILE &&
+		./bos_build_system    $PROJECT_FILE &&
+		./bos_build_initrd    $PROJECT_FILE &&
+		./bos_build_kernels   $PROJECT_FILE &&
+		./bos_finish          $PROJECT_FILE &&
+		./bos_create_iso      $PROJECT_FILE
+	fi &&
+
 	echo "bos: done"
 fi
 
