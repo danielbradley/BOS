@@ -106,7 +106,7 @@ squash_image()
 create_iso_image()
 {
 	cd ${TARGET}
-	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o Securizant_${EDITION}-${RELEASE}.iso ISO
+	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o ${NAME}.iso ISO
 }
 
 remount_images()
