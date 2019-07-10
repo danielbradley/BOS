@@ -16,7 +16,7 @@ PROJECT_FILE="$1"
 
 if [ ! -f "$PROJECT_FILE" ]
 then
-	echo "Usage: bos_all <bos project file>"
+	echo "Usage: bos_all [--mount] <bos project file>"
 else
 	source "$PROJECT_FILE" &&
 	mkdir -p "$TARGET/log" &&
