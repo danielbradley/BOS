@@ -47,7 +47,7 @@ unpack_package()
 		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2 &&
 		tar -C $BUILD_DIR -jxvf $SOURCE/$MPF.tar.bz2              &&
 		tar -C $BUILD_DIR -jxvf $SOURCE/$GMP.tar.bz2              &&
-		tar -C $BUILD_DIR -zxvf $SOURCE/$MPC.tar.bz               &&
+		tar -C $BUILD_DIR -zxvf $SOURCE/$MPC.tar.gz               &&
 		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpfr          &&
 		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-$VERSION/gmp           &&
 		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpc
