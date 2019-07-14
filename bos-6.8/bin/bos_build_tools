@@ -1,0 +1,225 @@
+#!/bin/bash
+
+#
+#       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#
+#
+#	Bos::build tools
+#
+#	Usage: bos_build_tools <output_file>
+#
+
+main()
+{
+	printf "bos_build_tools: " &&
+	find_base_dir              &&
+	check_args $@              &&
+	create_tools_image $IMAGE  &&
+	mount_image                &&
+	build_tools                &&
+	cp /local/settings/lsb/resolv.conf /tools/etc &&
+    chmod 644 /tools/etc/resolv.conf              &&
+	echo done
+}
+	
+build_tools()
+{
+	set > $IMAGE.environment &&
+
+	run_scripts
+	if [ $? -eq 0 ]
+	then
+		printf " done\n"
+	else
+		printf " error\n"
+		return -1
+	fi
+}
+
+run_scripts()
+{
+
+	download()
+	{
+		local File=$1
+		local Url=${RESOURCE_URL}/${PKG_DIR}/${File}
+
+		mkdir -p ${SOURCE} &&
+		cd ${SOURCE} &&
+		if [ ! -f ${File} ]
+		then
+			wget ${Url}
+		fi
+
+	}
+
+	local SCRIPTDIR=$BASE_DIR/lib/tools_script
+
+	source $SCRIPTDIR/stage1/binutils.sh           >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/stage1/gcc.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/stage1/linux-libc-headers.sh >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/stage1/glibc.sh              >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/stage1/adjust_toolchain.sh   >> $LOG 2>&1 &&
+	printf "#" &&
+	
+	source $SCRIPTDIR/ted/tcl.sh                   >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/ted/expect.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/ted/dejagnu.sh               >> $LOG 2>&1 &&
+	printf "#" &&
+
+	source $SCRIPTDIR/stage2/gcc.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/stage2/binutils.sh           >> $LOG 2>&1 &&
+	printf "#" &&
+	
+	source $SCRIPTDIR/other/gawk.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/coreutils.sh           >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/bzip2.sh               >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/gzip.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/diffutils.sh           >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/findutils.sh           >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/make.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/grep.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/sed.sh                 >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/gettext.sh             >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/ncurses.sh             >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/patch.sh               >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/tar.sh                 >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/texinfo.sh             >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/bash.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/m4.sh                  >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/bison.sh               >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/flex.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/util-linux.sh          >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/perl.sh                >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/activate.sh            >> $LOG 2>&1 &&
+	printf "#" &&
+	source $SCRIPTDIR/other/wget.sh                >> $LOG 2>&1 &&
+	printf "#"
+}
+
+find_base_dir()
+{
+	local THIS_DIR=$PWD
+	local EXE_DIR=`dirname $0`
+	cd $EXE_DIR/..
+	BASE_DIR=`pwd`
+	cd $THIS_DIR
+
+	set h+
+	umask 022
+	LFS=/tools
+	LC_ALL=POSIX
+
+	PATH=/tools/bin:/bin:/usr/bin:$PATH
+	#echo "bos_build_tools: exporting path: $PATH"
+	export LFS LC_ALL PATH
+}
+
+check_args()
+{
+	if [ $# -gt 2 ]
+	then
+		printf "too many parameters\n"
+		print_usage
+		return $?
+	elif [ $# -lt 1 ]
+	then
+		printf "must specify project file\n"
+		print_usage
+		return $?
+	else
+		for arg in $@
+		do
+			if [ "$arg" == "-f" ]
+			then
+				FORCE=true
+			else
+				PROJECT_DIR=`dirname $1`
+				PROJECT=$1
+				source $PROJECT
+                                source $BASE_DIR/etc/bos.conf
+                                                                 
+				BUILD_BASE=$BUILD
+				
+				IMAGE=$BUILD/$TOOLS_IMAGE_NAME
+				mkdir -p $BUILD/log
+				echo "" > $BUILD/log/tools.log
+				LOG=$BUILD/log/tools.log
+				echo "bos_build_tools: image=$IMAGE" > $LOG
+			fi
+		done
+	fi
+}
+
+print_usage()
+{
+	printf "Usage: bos_create_tools [-f] <image_name>\n"
+	return -1
+}
+
+create_tools_image()
+{
+	local DevZero="/dev/zero"
+	if [ ! -f "${DevZero}" ]
+	then
+		DevZero="/system/devices/zero"
+	fi
+
+	if [ ! -f $IMAGE -o "$FORCE" == "true" ]
+	then
+		mkdir -p `dirname $IMAGE`
+		printf "bos_build_tools: creating $IMAGE\n"
+		dd if=${DevZero} of=$1 bs=1000000 count=500 >> $LOG 2>&1
+		#/sbin/mke2fs -F $IMAGE >> $LOG 2>&1
+		mke2fs -F $IMAGE >> $LOG 2>&1
+	else
+		printf "bos_build_tools: warning tools image already exists\n" >> $LOG 2>&1
+	fi
+}
+
+mount_image()
+{
+	if [ ! -d /tools ]
+	then
+		mkdir /tools
+	fi
+	
+	if [ -d /tools/lost+found -o -d /tools/bin ]
+	then
+		printf "bos_build_tools: $IMAGE (already mounted)\n" >> $LOG 2>&1
+		#printf "bos_build_tools: $IMAGE (already mounted)\n"
+	else
+		mount $IMAGE /tools -o loop >> $LOG 2>&1
+		printf "bos_build_tools: $IMAGE (mounted)\n"
+	fi
+}
+
+main $@
+
