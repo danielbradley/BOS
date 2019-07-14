@@ -41,7 +41,7 @@ unpack_package()
 
 apply_patches()
 {
-	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/README ]
+	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/INSTALL ]
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
@@ -95,7 +95,7 @@ complete()
 {
 	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 	then
-		rm $BUILD_DIR/$PACKAGE-$VERSION/README
+		rm $BUILD_DIR/$PACKAGE-$VERSION/INSTALL
 	fi
 }
 
