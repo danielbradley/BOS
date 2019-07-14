@@ -10,6 +10,7 @@ PACKAGE=binutils		# Package information
 VERSION=2.21.1a			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
+LFS_TGT=$(uname -m)-lfs-linux-gnu
 
 #CHOST=i386-pc-linux-gnu
 
@@ -63,8 +64,10 @@ configure_source()
 
 			#CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
+				--target=$LFS_TGT \
 				--prefix=$GNU_PREFIX \
-				--disable-nls
+				--disable-nls \
+				--disable-werror
 #				--host=$CHOST --target=$CHOST &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi

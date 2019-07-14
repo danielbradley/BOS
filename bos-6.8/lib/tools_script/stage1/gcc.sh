@@ -6,10 +6,11 @@
 SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
-PACKAGE=gcc			# Package information
-VERSION=3.4.3			# Version information
+PACKAGE=gcc							# Package information
+VERSION=4.5.2						# Version information
 
-GNU_PREFIX=/tools		# Prefix packages are installed into
+GNU_PREFIX=/tools					# Prefix packages are installed into
+LFS_TGT=$(uname -m)-lfs-linux-gnu
 
 #CHOST=i386-pc-linux-gnu
 
@@ -63,13 +64,39 @@ configure_source()
 			cd $BUILD_DIR/$PACKAGE-build &&
 
 #			CFLAGS="-march=i386"
+#			../$PACKAGE-$VERSION/configure \
+#				--target=$LFS_TGT \
+#				--prefix=$GNU_PREFIX       \
+#				--libexecdir=/tools/lib    \
+#				--with-local-prefix=/tools \
+#				--disable-nls              \
+#				--enable-shared            \
+#				--enable-languages=c       \
+#				# new
+#				--disable-multilib         \
+#				--disable-decimal-float    \
+#				--disable-threads          \
+#				--disable-libmudflap       \
+#				--disable-libssp           \
+#				--disable-libgomp          \
+#				--without-ppl              \
+#				--without-cloog &&
+
 			../$PACKAGE-$VERSION/configure \
-				--prefix=$GNU_PREFIX \
-				--libexecdir=/tools/lib \
-				--with-local-prefix=/tools \
-				--disable-nls --enable-shared \
-				--enable-languages=c
-#				--host=$CHOST --target=$CHOST &&
+				--target=$LFS_TGT \
+				--prefix=$GNU_PREFIX       \
+				--disable-nls              \
+				--disable-shared           \
+				--disable-multilib         \
+				--disable-decimal-float    \
+				--disable-threads          \
+				--disable-libmudflap       \
+				--disable-libssp           \
+				--disable-libgomp          \
+				--enable-languages=c       \
+				--without-ppl              \
+				--without-cloog &&
+
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
