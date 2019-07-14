@@ -84,7 +84,7 @@ configure_source()
 #				--without-cloog &&
 
 			../$PACKAGE-$VERSION/configure \
-				--target=$LFS_TGT \
+				--target=$LFS_TGT          \
 				--prefix=$GNU_PREFIX       \
 				--disable-nls              \
 				--disable-shared           \
@@ -96,13 +96,7 @@ configure_source()
 				--disable-libgomp          \
 				--enable-languages=c       \
 				--without-ppl              \
-				--without-cloog            \
-				--with-gmp-include=$BUILD_DIR/gmp-5.0.1/                \
-				--with-gmp-lib=$BUILD_DIR/gmp-5.0.1/.libs               \
-				--with-mpfr-include=$BUILD_DIR/mpfr-3.0.0               \
-				--with-mpfr-lib=$BUILD_DIR/mpfr-3.0.0/.libs             \
-				--with-mpc-include=$BUILD_DIR/mpc-0.8.2                 \
-				--with-mpc-lib=$BUILD_DIR/mpc-0.8.2/.libs               &&
+				--without-cloog            &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi

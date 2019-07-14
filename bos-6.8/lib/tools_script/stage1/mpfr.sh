@@ -59,8 +59,7 @@ configure_source()
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION &&
 			./configure \
-				--with-gmp-include=$BUILD_DIR/gmp-5.0.1 \
-				--with-gmp-lib=$BUILD_DIR/gmp-5.0.1/.libs &&
+				--prefix=$GNU_PREFIX &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
@@ -86,6 +85,7 @@ install_package()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION &&
+			make install                    &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi

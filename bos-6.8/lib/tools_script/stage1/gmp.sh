@@ -58,7 +58,8 @@ configure_source()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE ]
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION &&
-			./configure &&
+			./configure \
+				--prefix=$GNU_PREFIX &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
@@ -84,6 +85,7 @@ install_package()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION &&
+			make install &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
