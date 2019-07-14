@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=binutils		# Package information
-VERSION=2.15.94.0.2.2		# Version information
+VERSION=2.21.1a			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
