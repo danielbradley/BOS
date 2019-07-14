@@ -59,7 +59,8 @@ configure_source()
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION &&
 			./configure \
-				--prefix=$GNU_PREFIX &&
+				--prefix=$GNU_PREFIX \
+				--with-gmp=$GNU_PREFIX &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi

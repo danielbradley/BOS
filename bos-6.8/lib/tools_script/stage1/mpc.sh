@@ -58,8 +58,10 @@ configure_source()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE ]
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION &&
-			./configure \
-				--prefix=$GNU_PREFIX &&
+			./configure                 \
+				--prefix=$GNU_PREFIX    \
+				--with-gmp=$GNU_PREFIX  \
+				--with-mpfr=$GNU_PREFIX &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
