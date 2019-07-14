@@ -60,7 +60,9 @@ configure_source()
 			cd $BUILD_DIR/$PACKAGE-$VERSION &&
 			./configure \
 				--with-gmp-include=$BUILD_DIR/gmp-5.0.1 \
-				--with-gmp-lib=$BUILD_DIR/gmp-5.0.1/.libs &&
+				--with-gmp-lib=$BUILD_DIR/gmp-5.0.1/.libs \
+				--with-mpfr-include=$BUILD_DIR/mpfr-3.0.0 \
+				--with-mpfr-lib=$BUILD_DIR/mpfr-3.0.0/.libs &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
