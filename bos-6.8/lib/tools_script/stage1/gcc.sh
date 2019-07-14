@@ -45,12 +45,12 @@ unpack_package()
 	then
 		mkdir -p $BUILD_DIR                                       &&
 		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2 &&
-		tar -C $BUILD_DIR -jxvf $SOURCE/$MPF                      &&
-		tar -C $BUILD_DIR -jxvf $SOURCE/$GMP                      &&
-		tar -C $BUILD_DIR -zxvf $SOURCE/$MPC                      &&
-		mv -v $MPF mpfr                                           &&
-		mv -v $GMP gmp                                            &&
-		mv -v $MPC mpc
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -jxvf $SOURCE/$MPF                      &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -jxvf $SOURCE/$GMP                      &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -zxvf $SOURCE/$MPC                      &&
+		mv -v  $BUILD_DIR/$PACKAGE-$VERSION/$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpf   &&
+		mv -v  $BUILD_DIR/$PACKAGE-$VERSION/$GMP $BUILD_DIR/$PACKAGE-$VERSION/gmp   &&
+		mv -v  $BUILD_DIR/$PACKAGE-$VERSION/$MPC $BUILD_DIR/$PACKAGE-$VERSION/mpc
 	fi
 }
 
@@ -108,7 +108,7 @@ configure_source()
 				--disable-libssp           \
 				--disable-libgomp          \
 				--enable-languages=c       \
-				--with-gmp-include=$BUILD_DIR/$PACKAGE-build/gmp \
+				--with-gmp-include=$BUILD_DIR/$PACKAGE-build/gmp   \
 				--with-gmp-lib=$BUILD_DIR/$PACKAGE-build/gmp/.libs \
 				--without-ppl              \
 				--without-cloog &&
