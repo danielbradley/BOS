@@ -84,7 +84,6 @@ configure_source()
 #				--without-cloog &&
 
 			../$PACKAGE-$VERSION/configure \
-				--target=$LFS_TGT          \
 				--prefix=$GNU_PREFIX       \
 				--disable-nls              \
 				--disable-shared           \

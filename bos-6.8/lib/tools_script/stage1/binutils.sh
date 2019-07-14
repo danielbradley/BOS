@@ -61,7 +61,6 @@ configure_source()
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build &&
 			../$PACKAGE-$VERSION/configure \
-				--target=$LFS_TGT \
 				--prefix=$GNU_PREFIX \
 				--disable-nls \
 				--disable-werror &&
