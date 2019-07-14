@@ -9,6 +9,11 @@ BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 PACKAGE=gcc							# Package information
 VERSION=4.5.2						# Version information
 
+MPF="mpfr-3.0.0.tar.bz2"
+GMP="gmp-5.0.1.tar.bz2 "
+MPC="mpc-0.8.2.tar.gz"
+
+
 GNU_PREFIX=/tools					# Prefix packages are installed into
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 
@@ -22,12 +27,15 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	unpack_package &&
-	apply_patches &&
+	download $MPF    &&
+	download $GMP    &&
+	download $MPC    &&
+	unpack_package   &&
+	apply_patches    &&
 	configure_source &&
-	compile_source &&
-	install_package &&
-	complete &&
+	compile_source   &&
+	install_package  &&
+	complete         &&
 	echo done
 }
 
@@ -35,8 +43,14 @@ unpack_package()
 {
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
-		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		mkdir -p $BUILD_DIR                                       &&
+		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2 &&
+		tar -C $BUILD_DIR -jxvf $SOURCE/$MPF                      &&
+		tar -C $BUILD_DIR -jxvf $SOURCE/$GMP                      &&
+		tar -C $BUILD_DIR -zxvf $SOURCE/$MPC                      &&
+		mv -v $MPF mpfr                                           &&
+		mv -v $GMP gmp                                            &&
+		mv -v $MPC mpc
 	fi
 }
 
