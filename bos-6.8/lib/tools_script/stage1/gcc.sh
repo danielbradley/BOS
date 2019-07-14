@@ -8,18 +8,13 @@ BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=gcc							# Package information
 VERSION=4.5.2						# Version information
-
-MPF="mpfr-3.0.0"
-GMP="gmp-5.0.1"
-MPC="mpc-0.8.2"
-
+ARCHIVE=tar.bz2
 
 GNU_PREFIX=/tools					# Prefix packages are installed into
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
 PKG_DIR=core/toolchain
 
 main()
@@ -27,9 +22,6 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download $MPF.tar.bz2 &&
-	download $GMP.tar.bz2 &&
-	download $MPC.tar.gz  &&
 	unpack_package   &&
 	apply_patches    &&
 	configure_source &&
@@ -46,14 +38,7 @@ unpack_package()
 		mkdir -p $BUILD_DIR                                       &&
 		mkdir -p $BUILD_DIR/$PACKAGE-build                        &&
 
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2 &&
-		tar -C $BUILD_DIR -jxvf $SOURCE/$MPF.tar.bz2              &&
-		tar -C $BUILD_DIR -jxvf $SOURCE/$GMP.tar.bz2              &&
-		tar -C $BUILD_DIR -zxvf $SOURCE/$MPC.tar.gz               &&
-
-		mv $BUILD_DIR/$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpfr      &&
-		mv $BUILD_DIR/$GMP $BUILD_DIR/$PACKAGE-$VERSION/gmp       &&
-		mv $BUILD_DIR/$MPC $BUILD_DIR/$PACKAGE-$VERSION/mpc       
+		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
 	fi
 }
 
@@ -112,12 +97,12 @@ configure_source()
 				--enable-languages=c       \
 				--without-ppl              \
 				--without-cloog            \
-				--with-mpfr-include=$BUILD_DIR/$PACKAGE-$VERSION/mpfr   \
-				--with-mpfr-lib=$BUILD_DIR/$PACKAGE-$VERSION/mpfr/.libs \
-				--with-gmp-include=$BUILD_DIR/$PACKAGE-$VERSION/gmp     \
-				--with-gmp-lib=$BUILD_DIR/$PACKAGE-$VERSION/gmp/.libs   \
-				--with-mpc-include=$BUILD_DIR/$PACKAGE-$VERSION/mpc     \
-				--with-mpc-lib=$BUILD_DIR/$PACKAGE-$VERSION/mpc/.libs   &&
+				--with-gmp-include=$BUILD_DIR/gmp-5.0.1/                \
+				--with-gmp-lib=$BUILD_DIR/gmp-5.0.1/.libs               \
+				--with-mpfr-include=$BUILD_DIR/mpfr-3.0.0               \
+				--with-mpfr-lib=$BUILD_DIR/mpfr-3.0.0/.libs             \
+				--with-mpc-include=$BUILD_DIR/mpc-0.8.2                 \
+				--with-mpc-lib=$BUILD_DIR/mpc-0.8.2/.libs               &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
