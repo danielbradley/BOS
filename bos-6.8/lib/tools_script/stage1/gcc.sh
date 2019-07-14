@@ -101,8 +101,6 @@ configure_source()
 				--with-mpfr=$GNU_PREFIX    \
 				--with-mpc=$GNU_PREFIX     &&
 
-				&&
-
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
