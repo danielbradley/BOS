@@ -51,9 +51,9 @@ unpack_package()
 		tar -C $BUILD_DIR -jxvf $SOURCE/$GMP.tar.bz2              &&
 		tar -C $BUILD_DIR -zxvf $SOURCE/$MPC.tar.gz               &&
 
-		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-build/mpfr             &&
-		ln -sf ../$GMP $BUILD_DIR/$PACKAGE-build/gmp              &&
-		ln -sf ../$MPC $BUILD_DIR/$PACKAGE-build/mpc
+		mv $BUILD_DIR/$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpfr      &&
+		mv $BUILD_DIR/$GMP $BUILD_DIR/$PACKAGE-$VERSION/gmp       &&
+		mv $BUILD_DIR/$MPC $BUILD_DIR/$PACKAGE-$VERSION/mpc       
 	fi
 }
 
@@ -110,9 +110,7 @@ configure_source()
 				--disable-libssp           \
 				--disable-libgomp          \
 				--enable-languages=c       \
-				--with-gmp-include=$(pwd)gmp    \
-				--with-gmp-lib=$(pwd)/gmp/.libs \
-				--without-ppl                   \
+				--without-ppl              \
 				--without-cloog &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
