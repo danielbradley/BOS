@@ -8,13 +8,13 @@ BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=binutils		# Package information
 VERSION=2.21.1a			# Version information
+ARCHIVE=tar.bz2
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 LFS_TGT=$(uname -m)-lfs-linux-gnu
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
 PKG_DIR=core/toolchain
 
 main()
@@ -36,7 +36,7 @@ unpack_package()
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.$ARCHIVE
 	fi
 }
 
@@ -61,14 +61,11 @@ configure_source()
 		then
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build &&
-
-			#CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
 				--target=$LFS_TGT \
 				--prefix=$GNU_PREFIX \
 				--disable-nls \
-				--disable-werror
-#				--host=$CHOST --target=$CHOST &&
+				--disable-werror &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
@@ -106,10 +103,7 @@ complete()
 {
 	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 	then
-		cd $BUILD_DIR/$PACKAGE-build
-
-#		rm -rf $BUILD_DIR/$PACKAGE-$VERSION/*
-#		rm -rf $BUILD_DIR/$PACKAGE-build/*
+		rm -rf $BUILD_DIR/$PACKAGE-$VERSION/README
 	fi
 }
 
