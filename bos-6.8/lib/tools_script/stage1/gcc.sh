@@ -96,7 +96,12 @@ configure_source()
 				--disable-libgomp          \
 				--enable-languages=c       \
 				--without-ppl              \
-				--without-cloog            &&
+				--without-cloog            \
+				--with-gmp=$GNU_PREFIX     \
+				--with-mpfr=$GNU_PREFIX    \
+				--with-mpc=$GNU_PREFIX     &&
+
+				&&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
