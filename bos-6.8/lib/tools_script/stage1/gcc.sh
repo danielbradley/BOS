@@ -112,8 +112,12 @@ configure_source()
 				--enable-languages=c       \
 				--without-ppl              \
 				--without-cloog            \
-				--with-gmp-include=$(pwd)/gmp \
-				--with-gmp-lib=$(pwd)/gmp/.libs &&
+				--with-mpfr-include=$(pwd)/mpfr   \
+				--with-mpfr-lib=$(pwd)/mpfr/.libs \
+				--with-gmp-include=$(pwd)/gmp     \
+				--with-gmp-lib=$(pwd)/gmp/.libs   \
+				--with-mpc-include=$(pwd)/mpc     \
+				--with-mpc-lib=$(pwd)/mpc/.libs   &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
