@@ -108,6 +108,8 @@ configure_source()
 				--disable-libssp           \
 				--disable-libgomp          \
 				--enable-languages=c       \
+				--with-gmp-include=$BUILD_DIR/$PACKAGE-build/gmp \
+				--with-gmp-lib=$BUILD_DIR/$PACKAGE-build/gmp/.libs \
 				--without-ppl              \
 				--without-cloog &&
 
