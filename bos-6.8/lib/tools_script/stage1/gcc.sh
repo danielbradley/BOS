@@ -111,7 +111,9 @@ configure_source()
 				--disable-libgomp          \
 				--enable-languages=c       \
 				--without-ppl              \
-				--without-cloog &&
+				--without-cloog            \
+				--with-gmp-include=$(pwd)/gmp \
+				--with-gmp-lib=$(pwd)/gmp/.libs &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
