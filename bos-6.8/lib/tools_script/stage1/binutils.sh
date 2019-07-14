@@ -35,8 +35,8 @@ unpack_package()
 {
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
-		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.$ARCHIVE
+		mkdir -p $BUILD_DIR &&
+		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-${VERSION}a.$ARCHIVE
 	fi
 }
 
@@ -46,8 +46,7 @@ apply_patches()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
-			cd $BUILD_DIR/$PACKAGE-$VERSION
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-*.patch
+			cd $BUILD_DIR/$PACKAGE-$VERSION &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi
