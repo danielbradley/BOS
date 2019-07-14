@@ -21,7 +21,6 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-gcc4-1.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
