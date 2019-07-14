@@ -45,9 +45,9 @@ unpack_package()
 	then
 		mkdir -p $BUILD_DIR                                       &&
 		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2 &&
-		tar -C $BUILD_DIR/$PACKAGE-$VERSION -jxvf $SOURCE/$MPF                      &&
-		tar -C $BUILD_DIR/$PACKAGE-$VERSION -jxvf $SOURCE/$GMP                      &&
-		tar -C $BUILD_DIR/$PACKAGE-$VERSION -zxvf $SOURCE/$MPC                      &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -jxvf $SOURCE/$MPF.tar.bz2              &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -jxvf $SOURCE/$GMP.tar.bz2              &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -zxvf $SOURCE/$MPC.tar.bz               &&
 		mv -v  $BUILD_DIR/$PACKAGE-$VERSION/$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpf   &&
 		mv -v  $BUILD_DIR/$PACKAGE-$VERSION/$GMP $BUILD_DIR/$PACKAGE-$VERSION/gmp   &&
 		mv -v  $BUILD_DIR/$PACKAGE-$VERSION/$MPC $BUILD_DIR/$PACKAGE-$VERSION/mpc
