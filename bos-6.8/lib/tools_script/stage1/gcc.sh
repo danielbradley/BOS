@@ -9,9 +9,9 @@ BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 PACKAGE=gcc							# Package information
 VERSION=4.5.2						# Version information
 
-MPF="mpfr-3.0.0.tar.bz2"
-GMP="gmp-5.0.1.tar.bz2 "
-MPC="mpc-0.8.2.tar.gz"
+MPF="mpfr-3.0.0"
+GMP="gmp-5.0.1"
+MPC="mpc-0.8.2"
 
 
 GNU_PREFIX=/tools					# Prefix packages are installed into
@@ -27,9 +27,9 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download $MPF    &&
-	download $GMP    &&
-	download $MPC    &&
+	download $MPF.tar.bz2 &&
+	download $GMP.tar.bz2 &&
+	download $MPC.tar.gz  &&
 	unpack_package   &&
 	apply_patches    &&
 	configure_source &&
