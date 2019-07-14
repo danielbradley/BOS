@@ -44,13 +44,16 @@ unpack_package()
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD_DIR                                       &&
+		mkdir -p $BUILD_DIR/$PACKAGE-build                        &&
+
 		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2 &&
 		tar -C $BUILD_DIR -jxvf $SOURCE/$MPF.tar.bz2              &&
 		tar -C $BUILD_DIR -jxvf $SOURCE/$GMP.tar.bz2              &&
 		tar -C $BUILD_DIR -zxvf $SOURCE/$MPC.tar.gz               &&
-		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpfr          &&
-		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-$VERSION/gmp           &&
-		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-$VERSION/mpc
+
+		ln -sf ../$MPF $BUILD_DIR/$PACKAGE-build/mpfr             &&
+		ln -sf ../$GMP $BUILD_DIR/$PACKAGE-build/gmp              &&
+		ln -sf ../$MPC $BUILD_DIR/$PACKAGE-build/mpc
 	fi
 }
 
@@ -74,7 +77,6 @@ configure_source()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE ]
 		then
-			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build &&
 
 #			CFLAGS="-march=i386"
@@ -108,9 +110,9 @@ configure_source()
 				--disable-libssp           \
 				--disable-libgomp          \
 				--enable-languages=c       \
-				--with-gmp-include=../$PACKAGE-$VERSION/gmp   \
-				--with-gmp-lib=../$PACKAGE-$VERSION/gmp/.libs \
-				--without-ppl              \
+				--with-gmp-include=$(pwd)gmp    \
+				--with-gmp-lib=$(pwd)/gmp/.libs \
+				--without-ppl                   \
 				--without-cloog &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
