@@ -48,7 +48,7 @@ run_scripts()
 		cd ${SOURCE} &&
 		if [ ! -f ${File} ]
 		then
-			wget ${Url}
+			${WGET} ${Url}
 		fi
 
 	}
