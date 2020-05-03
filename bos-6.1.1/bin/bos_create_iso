@@ -72,7 +72,7 @@ check_locations()
 create_iso()
 {
 #	echo "Chrooting into and preparing image"
-	su -c PATH=/system/software/bin:/bin:/opt/schily/bin\ $SCRIPT_SRC_DIR/X0_CreateISO.sh\ $PROJECT
+	su -c PATH=/system/software/bin:/system/software/sbin:/bin:/opt/schily/bin\ $SCRIPT_SRC_DIR/X0_CreateISO.sh\ $PROJECT
 }
 
 main $@
