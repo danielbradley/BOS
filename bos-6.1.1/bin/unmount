@@ -86,7 +86,7 @@ function unmount()
         local free_loop=$1
         local mount_point=$2
         local info=`grep "$mount_point" /system/processes/mounts`
-	local loop_device=echo $info | cut -d' ' -f1`
+	local loop_device=`echo $info | cut -d' ' -f1`
 
         if [ -n "$info" ]
         then
