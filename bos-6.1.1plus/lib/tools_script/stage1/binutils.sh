@@ -46,7 +46,6 @@ apply_patches()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION
-			#patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-*.patch
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi

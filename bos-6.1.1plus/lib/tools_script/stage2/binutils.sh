@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/stage2		# Where this package should be built
 
 PACKAGE=binutils					# Package information
-VERSION=2.15.94.0.2.2				# Version information
+VERSION=2.16.1						# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -47,8 +47,6 @@ apply_patches()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION
-			# Not needed as compiling from GCC-3.4.3 (stage1)
-			# patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-*.patch
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi
