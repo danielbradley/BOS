@@ -4,6 +4,9 @@
 #
 #  Usage 9_FinishImages.sh <directory> <target>
 
+LOSETUP=`which losetup`
+UMOUNT=`which umount`
+
 main()
 {
 	ProjectFile="$1"
@@ -99,7 +102,7 @@ squash_image()
 	mkdir -p ${TARGET}/mnt
 	mount ${TARGET}/${File}.e2 ${TARGET}/mnt -o loop,ro
 	mksquashfs ${TARGET}/mnt ${Images}/${File}.img -noappend
-	umount -d ${TARGET}/mnt
+	unmount -d ${TARGET}/mnt
 	rmdir ${TARGET}/mnt
 }
 
@@ -113,6 +116,20 @@ remount_images()
 {
 	local ProjectFile="$1"
 	${BASE_DIR}/bin/bos_mount ${ProjectFile}
+}
+
+function unmount()
+{
+    local free_loop=$1
+    local mount_point=$2
+    local info=`grep "$mount_point" /system/processes/mounts`
+	local loop_device=`echo $info | cut -d' ' -f1`
+
+    if [ -n "$info" ]
+    then
+        ${UMOUNT} $free_loop $mount_point
+		${LOSETUP} -d "$loop_device"
+    fi
 }
 
 main $@
