@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=binutils		# Package information
-VERSION=2.15.94.0.2.2		# Version information
+VERSION=2.16.1			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -21,7 +21,7 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-gcc4-1.patch &&
+	#download ${PACKAGE}-${VERSION}-gcc4-1.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -47,7 +47,7 @@ apply_patches()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-*.patch
+			#patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-*.patch
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi
