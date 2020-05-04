@@ -93,6 +93,11 @@ install_package()
 			make install &&
 #	Done later	make -C ld clean
 #	in adjust	make -C ld LIB_PATH=/tools/lib
+
+			make -C ld clean                 &&
+			make -C ld LIB_PATH=/tools/lib   &&
+			cp -v ld/ld-new /tools/bin       &&
+
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
