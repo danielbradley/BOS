@@ -1,10 +1,8 @@
 #!/bin/bash
 #
 #
-#       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#       Copyright (c) 2004-2020 Daniel Robert Bradley. All rights reserved.
 #
-
-#PATH=$PATH:/local/bos/checkouts/BOS/bos-6.1.1/lib/bin
 
 if [ "--mount" == "$1" ]
 then
