@@ -21,8 +21,7 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-no_fixincludes-1.patch &&
-	download ${PACKAGE}-${VERSION}-specs-2.patch &&
+	download ${PACKAGE}-${VERSION}-specs-1.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -48,8 +47,7 @@ apply_patches()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-no_fix*.patch &&
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-specs-2.patch &&
+			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-specs-1.patch &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi
