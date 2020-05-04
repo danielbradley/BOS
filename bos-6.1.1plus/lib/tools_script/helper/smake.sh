@@ -92,7 +92,7 @@ install_package()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION &&
-			make install &&
+			make install &&		# installs into /opt --> /local/bos/checkouts/BOS/bos-6.1.1plus/libexec/schilly/bin
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
