@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=glibc			# Package information
-VERSION=2.3.4			# Version information
+VERSION=2.3.6			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -21,9 +21,6 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-fix_test-1.patch &&
-	download ${PACKAGE}-${VERSION}-rtld_search_dirs-1.patch &&
-	download ${PACKAGE}-${VERSION}-tls_assert-1.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -48,11 +45,8 @@ apply_patches()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
-			cd $BUILD_DIR/$PACKAGE-$VERSION
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-fix_test*.patch
-
-			sed -i 's@/etc@/tools/etc@g' sysdeps/unix/sysv/linux/paths.h
-			
+			cd $BUILD_DIR/$PACKAGE-$VERSION                              &&
+			sed -i 's@/etc@/tools/etc@g' sysdeps/unix/sysv/linux/paths.h &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi

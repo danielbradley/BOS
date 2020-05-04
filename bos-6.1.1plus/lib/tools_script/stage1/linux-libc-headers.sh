@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=linux-libc-headers	# Package information
-VERSION=2.6.11.2		# Version information
+VERSION=2.6.12.0			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
