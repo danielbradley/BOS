@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source	# Where source packages are located
 BUILD=$BUILD_BASE/tools/stage2	# Where this package should be built
 
 PACKAGE=gcc			# Package information
-VERSION=3.4.3			# Version information
+VERSION=4.0.3		# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -20,9 +20,8 @@ main()
 {
 	echo $PACKAGE-$VERSION
 
-	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-no_fixincludes-1.patch &&
-	download ${PACKAGE}-${VERSION}-specs-2.patch &&
+	download ${PACKAGE}-${VERSION}.${ARCHIVE}    &&
+	download ${PACKAGE}-${VERSION}-specs-1.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -47,9 +46,15 @@ apply_patches()
 	then
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
-			cd $BUILD/$PACKAGE-$VERSION
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-no_fix*.patch &&
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-specs-2.patch &&
+			cd $BUILD/$PACKAGE-$VERSION   &&
+			cp -v gcc/Makefile.in{,.orig} &&
+			sed 's@\./fixinc\.sh@-c true@' gcc/Makefile.in.orig > gcc/Makefile.in &&
+
+			cp -v gcc/Makefile.in{,.tmp} &&
+			sed 's/^XCFLAGS =$/& -fomit-frame-pointer/' gcc/Makefile.in.tmp > gcc/Makefile.in &&
+
+			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-specs-1.patch &&
+
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi

@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=gcc			# Package information
-VERSION=3.4.3			# Version information
+VERSION=4.0.3		# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
