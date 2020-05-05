@@ -88,6 +88,7 @@ install_package()
 			cd $BUILD/$PACKAGE$VERSION/unix &&
 			make install &&
 			make install-private-headers &&
+			ln -sv tclsh8.4 /tools/bin/tclsh &&
 			touch $BUILD/$PACKAGE$VERSION/SUCCESS.INSTALL
 		fi
 	fi
