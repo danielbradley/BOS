@@ -56,6 +56,8 @@ apply_patches()
 
 configure_source()
 {
+	PATH=/system/software/bin:$PATH
+
 	if [ -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 	then
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.CONFIGURE ]
