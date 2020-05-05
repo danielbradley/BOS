@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source	# Where source packages are located
 BUILD=$BUILD_BASE/tools/ted		# Where this package should be built
 
 PACKAGE=tcl						# Package information
-VERSION=8.4.9					# Version information
+VERSION=8.4.13					# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -87,6 +87,7 @@ install_package()
 		then
 			cd $BUILD/$PACKAGE$VERSION/unix &&
 			make install &&
+			make install-private-headers &&
 			touch $BUILD/$PACKAGE$VERSION/SUCCESS.INSTALL
 		fi
 	fi
