@@ -7,13 +7,13 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=ncurses			# Package information
-VERSION=5.4			# Version information
+VERSION=5.5				# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
+ARCHIVE=tar.gz
 PKG_DIR=core/libraries
 
 main()
@@ -35,7 +35,7 @@ unpack_package()
 	if [ ! -d $BUILD/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD &&
-		tar -C $BUILD -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		tar -C $BUILD -zxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
 	fi
 }
 
