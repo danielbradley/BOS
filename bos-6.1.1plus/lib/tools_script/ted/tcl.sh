@@ -53,6 +53,9 @@ apply_patches()
 
 configure_source()
 {
+	export ac_cv_func_strtod=yes
+	export tcl_cv_strtod_buggy=1
+
 	if [ -f $BUILD/$PACKAGE$VERSION/SUCCESS.PATCHED ]
 	then
 		if [ ! -f $BUILD/$PACKAGE$VERSION/SUCCESS.CONFIGURE ]
