@@ -91,8 +91,11 @@ install_package()
 		then
 			cd $BUILD_DIR/$PACKAGE-build &&
 			make install &&
-#	Done later	make -C ld clean
-#	in adjust	make -C ld LIB_PATH=/tools/lib
+
+			#
+			#	Now create a version of ld
+			#	that will be used later.
+			#
 
 			make -C ld clean                 &&
 			make -C ld LIB_PATH=/tools/lib   &&
@@ -107,10 +110,8 @@ complete()
 {
 	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 	then
-		cd $BUILD_DIR/$PACKAGE-build
-
-#		rm -rf $BUILD_DIR/$PACKAGE-$VERSION/*
-#		rm -rf $BUILD_DIR/$PACKAGE-build/*
+		rm -rf $BUILD_DIR/$PACKAGE-$VERSION/*
+		rm -rf $BUILD_DIR/$PACKAGE-build/*
 	fi
 }
 
