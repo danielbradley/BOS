@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=util-linux			# Package information
-VERSION=2.12q			# Version information
+VERSION=2.12r			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -46,6 +46,7 @@ apply_patches()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION &&
+			sed -i 's@eval $COMPILE@gcc -o conftest conftest.c@g' testincl &&
 			sed -i 's@/usr/include@$GNU_PREFIX/include@g' configure &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
