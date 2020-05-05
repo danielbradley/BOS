@@ -79,7 +79,7 @@ compile_source()
 			cd $BUILD/$PACKAGE-$VERSION &&
 			make -C lib &&
 			make -C mount mount umount &&
-			make -C text-utils more &&
+			#make -C text-utils more &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.MAKE
 		fi
 	fi
