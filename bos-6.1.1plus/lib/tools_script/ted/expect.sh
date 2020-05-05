@@ -6,7 +6,7 @@
 SOURCE=$BUILD_BASE/tools/source	# Where source packages are located
 BUILD=$BUILD_BASE/tools/ted		# Where this package should be built
 
-TCLPATH=$BUILD/tcl8.4.9
+TCLPATH=$BUILD/tcl8.4.13
 PACKAGE=expect			# Package information
 VERSION=5.43			# Version information
 
