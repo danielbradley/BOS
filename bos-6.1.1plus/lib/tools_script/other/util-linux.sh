@@ -92,7 +92,8 @@ install_package()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION &&
-			cp mount/{,u}mount text-utils/more $GNU_PREFIX/bin &&
+			cp mount/{,u}mount  $GNU_PREFIX/bin &&
+			#cp text-utils/more $GNU_PREFIX/bin &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
