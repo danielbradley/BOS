@@ -73,6 +73,8 @@ run_scripts()
 	source $SCRIPTDIR/ted/dejagnu.sh               >> $LOG 2>&1 &&
 	printf "#" &&
 
+	exit
+
 	source $SCRIPTDIR/stage2/gcc.sh                >> $LOG 2>&1 &&
 	printf "#" &&
 	source $SCRIPTDIR/stage2/binutils.sh           >> $LOG 2>&1 &&
