@@ -42,6 +42,8 @@ unpack_package()
 
 apply_patches()
 {
+	exit -1
+
 	if [ -f $BUILD/$PACKAGE-$VERSION/README ]
 	then
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
