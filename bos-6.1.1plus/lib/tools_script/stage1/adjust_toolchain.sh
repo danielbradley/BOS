@@ -15,7 +15,7 @@ GNU_PREFIX=/tools		# Prefix packages are installed into
 
 main()
 {
-	echo Adjust toolchain
+	echo Adjust toolchain using path: $PATH
 	reinstall_binutils   &&
 	edit_gcc_specs       &&
 	clean_fixed_includes &&
@@ -25,12 +25,19 @@ main()
 
 reinstall_binutils()
 {
-	if [ ! -f $BUILD_DIR/ADJUSTED_BINUTILS ]
+	local machine=`gcc -dumpmachine`
+
+	if [ -z "$machine" ]
 	then
-		mv -v /tools/bin/{ld,ld-old}                     &&
-		mv -v /tools/$(gcc -dumpmachine)/bin/{ld,ld-old} &&
-		mv -v /tools/bin/{ld-new,ld}                     &&
-		ln -sv /tools/bin/ld /tools/$(gcc -dumpmachine)/bin/ld
+		echo "Invalid machine type returned from gcc"
+		return -1
+
+	elif [ ! -f $BUILD_DIR/ADJUSTED_BINUTILS ]
+	then
+		mv -v  /tools/bin/{ld,ld-old}          &&
+		mv -v  /tools/$machine/bin/{ld,ld-old} &&
+		mv -v  /tools/bin/{ld-new,ld}          &&
+		ln -sv /tools/bin/ld /tools/$machine/bin/ld
 
 		touch $BUILD_DIR/ADJUSTED_BINUTILS
 	fi
@@ -38,17 +45,20 @@ reinstall_binutils()
 
 edit_gcc_specs()
 {
+	local SPECFILEDIR=`dirname $(gcc -print-libgcc-file-name)`
+	local SPECFILE="$SPECFILEDIR/specs"
+
 	if [ ! -f $BUILD_DIR/ADJUSTED_GCC ]
 	then
 		# Need to handle both cases:
 		# a) building from LFS
 		# b) building from SZT
 
-		SPECFILE=`dirname $(gcc -print-libgcc-file-name)`/specs                        &&
+		echo "Creating gcc specs file: $SPECFILE"
 		gcc -dumpspecs                                                     > $SPECFILE &&
 		sed -i                 's@/lib/ld-linux.so.2@/tools/ld-linux.so.2@g' $SPECFILE &&
 		sed -i 's@/system/software/lib/ld-linux.so.2@/tools/ld-linux.so.2@g' $SPECFILE &&
-		unset SPECFILE                                                                 &&
+		unset SPECFILEDIR SPECFILE                                                     &&
 
 		touch $BUILD_DIR/ADJUSTED_GCC
 	fi
