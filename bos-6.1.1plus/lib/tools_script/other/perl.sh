@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=perl			# Package information
-VERSION=5.8.7			# Version information
+VERSION=5.8.8			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -22,7 +22,7 @@ main()
 
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-libc-1.patch &&
+	download ${PACKAGE}-${VERSION}-libc-2.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -48,7 +48,7 @@ apply_patches()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION &&
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-libc-1.patch &&
+			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-libc-2.patch &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi
@@ -65,7 +65,7 @@ configure_source()
 #			CFLAGS="-march=i386"
 			./configure.gnu \
 				--prefix=$GNU_PREFIX \
-				-Dstatic_ext='IO Fcntl POSIX' &&
+				-Dpager="/usr/bin/less -isR" &&
 #				--host=$CHOST --target=$CHOST &&
 			touch /$BUILD/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi

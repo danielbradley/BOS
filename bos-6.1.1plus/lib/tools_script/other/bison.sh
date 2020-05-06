@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=bison			# Package information
-VERSION=2.0			# Version information
+VERSION=2.2				# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 

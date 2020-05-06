@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=bash			# Package information
-VERSION=3.0			# Version information
+VERSION=3.1				# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -21,7 +21,7 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-avoid_WCONTINUED-1.patch &&
+	download ${PACKAGE}-${VERSION}-fixes-8.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -47,7 +47,7 @@ apply_patches()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-avoid*.patch &&
+			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-fixes-8.patch &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi

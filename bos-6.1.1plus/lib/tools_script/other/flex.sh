@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=flex			# Package information
-VERSION=2.5.31			# Version information
+VERSION=2.5.36			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -21,7 +21,7 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-debian_fixes-3.patch &&
+	#download ${PACKAGE}-${VERSION}-debian_fixes-3.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -47,7 +47,7 @@ apply_patches()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION &&
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-debian*.patch &&
+			#patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-debian*.patch &&
 			touch doc/flex.1 &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
