@@ -91,9 +91,9 @@ install_package()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION &&
-			cp -v perl pod/pod2man $GNU_PREFIX/bin &&
-			mkdir -pv $GNU_PREFIX/lib/${PACKAGE}5/$VERSION &&
-			cp -Rv lib/* $GNU_PREFIX/lib/${PACKAGE}5/$VERSION &&
+			cp -fv perl pod/pod2man $GNU_PREFIX/bin &&
+			mkdir -pv              $GNU_PREFIX/lib/${PACKAGE}5/$VERSION &&
+			cp -Rv lib/*           $GNU_PREFIX/lib/${PACKAGE}5/$VERSION &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
