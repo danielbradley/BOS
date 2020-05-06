@@ -55,6 +55,8 @@ run_scripts()
 
 	local SCRIPTDIR=$BASE_DIR/lib/tools_script
 
+	echo "bos_build_tools: $PATH"                  >> $LOG 2>&1 &&
+
 	source $SCRIPTDIR/stage1/binutils.sh           >> $LOG 2>&1 &&
 	printf "#" &&
 	source $SCRIPTDIR/stage1/gcc.sh                >> $LOG 2>&1 &&
@@ -75,8 +77,6 @@ run_scripts()
 
 	source $SCRIPTDIR/stage2/gcc.sh                >> $LOG 2>&1 &&
 	printf "#" &&
-
-	exit -1
 
 	source $SCRIPTDIR/stage2/binutils.sh           >> $LOG 2>&1 &&
 	printf "#" &&
