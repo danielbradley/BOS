@@ -20,8 +20,7 @@ main()
 {
 	echo $PACKAGE-$VERSION
 
-
-	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
+	download ${PACKAGE}-${VERSION}.${ARCHIVE}   &&
 	download ${PACKAGE}-${VERSION}-libc-2.patch &&
 	unpack_package &&
 	apply_patches &&
@@ -65,6 +64,7 @@ configure_source()
 #			CFLAGS="-march=i386"
 			./configure.gnu \
 				--prefix=$GNU_PREFIX \
+				-Dstatic_ext='Data/Dumper Fcntl IO POSIX' \
 				-Dpager="/usr/bin/less -isR" &&
 #				--host=$CHOST --target=$CHOST &&
 			touch /$BUILD/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
