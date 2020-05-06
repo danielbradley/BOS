@@ -66,8 +66,6 @@ run_scripts()
 	source $SCRIPTDIR/stage1/adjust_toolchain.sh   >> $LOG 2>&1 &&
 	printf "#" &&
 
-	return -1
-	
 	source $SCRIPTDIR/ted/tcl.sh                   >> $LOG 2>&1 &&
 	printf "#" &&
 	source $SCRIPTDIR/ted/expect.sh                >> $LOG 2>&1 &&

@@ -56,8 +56,8 @@ edit_gcc_specs()
 
 		echo "Creating gcc specs file: $SPECFILE"
 		gcc -dumpspecs                                                     > $SPECFILE &&
-		sed -i 's@/system/software/lib/ld-linux.so.2@/tools/ld-linux.so.2@g' $SPECFILE &&
-		sed -i                 's@/lib/ld-linux.so.2@/tools/ld-linux.so.2@g' $SPECFILE &&
+		sed -i 's@/system/software/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
+		sed -i                 's@/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
 		unset SPECFILEDIR SPECFILE                                                     &&
 
 		touch $BUILD_DIR/ADJUSTED_GCC
