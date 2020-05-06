@@ -14,7 +14,7 @@ GNU_PREFIX=/tools		# Prefix packages are installed into
 #CHOST=i386-pc-linux-gnu
 
 ARCHIVE=tar.bz2
-PKG_DIR=core/tools
+PKG_DIR=core/commands
 
 main()
 {
