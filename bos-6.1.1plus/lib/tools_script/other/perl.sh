@@ -64,8 +64,7 @@ configure_source()
 #			CFLAGS="-march=i386"
 			./configure.gnu \
 				--prefix=$GNU_PREFIX \
-				-Dstatic_ext='Data/Dumper Fcntl IO POSIX' \
-				-Dpager="/usr/bin/less -isR" &&
+				-Dstatic_ext='Data/Dumper Fcntl IO POSIX'
 #				--host=$CHOST --target=$CHOST &&
 			touch /$BUILD/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
