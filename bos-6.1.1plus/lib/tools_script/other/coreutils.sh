@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=coreutils		# Package information
-VERSION=5.2.1			# Version information
+VERSION=5.96			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
