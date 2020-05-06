@@ -42,20 +42,15 @@ unpack_package()
 
 apply_patches()
 {
-	exit -1
-
 	if [ -f $BUILD/$PACKAGE-$VERSION/README ]
 	then
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION   &&
-			cp -v gcc/Makefile.in{,.orig} &&
-			sed 's@\./fixinc\.sh@-c true@' gcc/Makefile.in.orig > gcc/Makefile.in &&
+			sed -i 's@\./fixinc\.sh@-c true@'              gcc/Makefile.in &&
+			sed -i 's/^XCFLAGS =$/& -fomit-frame-pointer/' gcc/Makefile.in &&
 
-			cp -v gcc/Makefile.in{,.tmp} &&
-			sed 's/^XCFLAGS =$/& -fomit-frame-pointer/' gcc/Makefile.in.tmp > gcc/Makefile.in &&
-
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-specs-1.patch &&
+			patch -Np1  -i $SOURCE/$PACKAGE-$VERSION-specs-1.patch &&
 
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
@@ -70,6 +65,8 @@ configure_source()
 		then
 			mkdir -p $BUILD/$PACKAGE-build &&
 			cd $BUILD/$PACKAGE-build &&
+
+			echo "Configure: $PATH" &&
 
 #			CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
@@ -95,6 +92,7 @@ compile_source()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.MAKE ]
 		then
 			cd $BUILD/$PACKAGE-build &&
+			echo "Make: $PATH" &&
 			make &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.MAKE
 		fi
@@ -109,7 +107,6 @@ install_package()
 		then
 			cd $BUILD/$PACKAGE-build &&
 			make install &&
-			ln -sf gcc /tools/bin/cc &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi

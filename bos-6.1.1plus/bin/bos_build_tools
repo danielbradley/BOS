@@ -75,6 +75,9 @@ run_scripts()
 
 	source $SCRIPTDIR/stage2/gcc.sh                >> $LOG 2>&1 &&
 	printf "#" &&
+
+	exit -1
+
 	source $SCRIPTDIR/stage2/binutils.sh           >> $LOG 2>&1 &&
 	printf "#" &&
 	
