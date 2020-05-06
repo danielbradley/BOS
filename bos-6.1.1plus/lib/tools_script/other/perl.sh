@@ -103,7 +103,7 @@ delete_package()
 {
 	if [ -f $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 	then
-		rm -rf $BUILD/$PACKAGE-$VERSION/*
+		: rm -rf $BUILD/$PACKAGE-$VERSION/*
 	fi
 }
 
