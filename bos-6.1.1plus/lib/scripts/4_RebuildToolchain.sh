@@ -61,10 +61,10 @@ rebuild_toolchain()
 	do
 	echo $CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM \
 			PATH=/system/software/bin:/bin:/tools/bin \
-			$SU root -s /tools/bin/bash -c "/mnt/software/toolchain/$TOOL.sh +h" >> $LOG 2>&1 
+			$SU system -s /tools/bin/bash -c "/mnt/software/toolchain/$TOOL.sh +h" >> $LOG 2>&1 
 	$CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM LC_ALL=POSIX \
 			PATH=/system/software/bin:/bin:/tools/bin \
-			$SU root -s /tools/bin/bash -c /mnt/software/toolchain/$TOOL.sh +h >> $LOG 2>&1
+			$SU system -s /tools/bin/bash -c /mnt/software/toolchain/$TOOL.sh +h >> $LOG 2>&1
 	if [ $? -eq 0 ]
 	then
 		printf " #"
