@@ -8,7 +8,6 @@ main()
 	find_base_dir $@
 	read_headers $@
         process_arguments &&
-##	copy_sources	## deprecated ##
 
 	LOG="$TARGET/log/toolchain.log"
 
@@ -45,18 +44,6 @@ process_arguments()
 
 	IMAGE_NAME=`basename $TARGET`
         MOUNT_POINT=$VAR_DIR/$NAMESPACE/$IMAGE_NAME
-}
-
-#
-#	Deprecated
-#
-copy_sources()
-{
-	cp -f $SOURCE/glibc-2.3.4*              $MOUNT_POINT/mnt/source &&
-#	cp -f $SOURCE/glibc-linuxthreads-2.3.2* $MOUNT_POINT/mnt/source &&
-	cp -f $SOURCE/gcc-3.3.1*                $MOUNT_POINT/mnt/source &&
-	cp -f $SOURCE/binutils-2.14*            $MOUNT_POINT/mnt/source &&
-	chmod o+r $MOUNT_POINT/mnt/source/*
 }
 
 rebuild_toolchain()
