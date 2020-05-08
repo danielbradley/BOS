@@ -101,6 +101,8 @@ create_image()
 
 			if [ ! -f $IMAGE_DIR/$IMAGE_NAME ]
 			then
+				ulimit -f unlimited
+
 				echo `which $DD`
 				echo `which $MAKE_FS`
 
