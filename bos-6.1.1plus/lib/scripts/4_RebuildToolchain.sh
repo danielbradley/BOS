@@ -99,7 +99,7 @@ activate_toolchain()
 			TERM=$TERM \
 			PS1='\u@\w\$ ' \
 			PATH=/tools/bin \
-			$SU system -c activate\ -li\ $SOFTWARE_BASE/commands/development/gnu-3.4.3 >> $LOG 2>&1
+			$SU system -c activate\ -li\ $SOFTWARE_BASE/commands/development/gnu-4.0.3 >> $LOG 2>&1
 	fi
 }
 
