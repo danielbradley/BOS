@@ -1,0 +1,104 @@
+#!/bin/bash
+
+#
+#       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
+#
+#
+#	Umount
+#
+
+VAR_DIR=""	# From BOS conf
+NAMESPACE=""	# From BOS conf
+
+# Commands
+
+LOSETUP=`which losetup`
+UMOUNT=`which umount`
+
+main()
+{
+	local BaseDir=`find_base_dir` &&
+	read_headers "${BaseDir}" &&
+	local MountPoint=`process_arguments "${VAR_DIR}" "${NAMESPACE}" "$@"` &&
+	unmount_images "${MountPoint}"
+	if [ $? -eq 0 ]
+	then
+		echo done
+	else
+		echo error during dismount
+	fi
+}
+
+find_base_dir()
+{
+	local ThisDir="${PWD}"
+	local ExeDir=`dirname $0`
+	cd "${ExeDir}"/..
+	local BaseDir=`pwd`
+	cd "${ThisDir}"
+	echo "${BaseDir}"
+}
+
+read_headers()
+{
+	local BaseDir="$1"
+
+	BASE_DIR="${BaseDir}"
+	source "${BaseDir}"/etc/bos.conf
+}
+
+process_arguments()
+{
+	local VarDir="$1"
+	local Namespace="$2"
+	local Target="$3"
+
+	if [ $# -ne 3 ]
+	then
+		echo "Usage: bos <target iso>"
+		exit 1
+	fi
+
+	local ImageName=`basename "${Target}"` &&
+	echo "${VarDir}"/"${Namespace}"/"${ImageName}"
+}
+
+unmount_images()
+{
+        local MountPoint="$1"
+
+        unmount -d "${MountPoint}/system/devices/pts"
+        unmount -d "${MountPoint}/system/devices/shm"
+        unmount -d "${MountPoint}/system/devices"
+        unmount -d "${MountPoint}/local"
+        unmount -d "${MountPoint}/mnt"
+        unmount -d "${MountPoint}/system/features/*"
+        unmount -d "${MountPoint}/system/mounts/INITRD"
+        unmount -d "${MountPoint}/system/processes"
+        unmount -d "${MountPoint}/system"
+        unmount -d "${MountPoint}/tools"
+        unmount -d "${MountPoint}"
+        unmount -d /tools
+}
+
+function unmount()
+{
+    local free_loop=$1
+
+    for mount_point in $2
+    do
+	    if [ -d "$mount_point" ]
+    	then
+	    	local info=`grep "$mount_point" /system/processes/mounts`
+			local loop_device=`echo $info | cut -d' ' -f1`
+
+		    if [ -n "$info" ]
+		    then
+	    	    ${UMOUNT} $free_loop $mount_point
+				${LOSETUP} -d "$loop_device"
+		    fi
+		fi
+	done
+}
+
+main "$@"

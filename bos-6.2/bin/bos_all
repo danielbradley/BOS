@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+#
+#       Copyright (c) 2004-2020 Daniel Robert Bradley. All rights reserved.
+#
+
+if [ "--mount" == "$1" ]
+then
+	MOUNT="TRUE"
+	shift
+fi 
+
+PROJECT_FILE="$1"
+
+if [ ! -f "$PROJECT_FILE" ]
+then
+	echo "Usage: bos_all [--mount] <bos project file>"
+else
+	source "$PROJECT_FILE" &&
+	mkdir -p "$TARGET/log" &&
+
+	echo "Starting BOS with path: $PATH"
+
+	./bos_build_utils     "$PROJECT_FILE" &&
+	./bos_build_tools     "$PROJECT_FILE" &&
+	./bos_create          "$PROJECT_FILE" &&
+	./bos_mount           "$PROJECT_FILE" &&
+
+	if [ "TRUE" != "$MOUNT" ]
+	then
+		./bos_prepare         $PROJECT_FILE &&
+		./bos_build_toolchain $PROJECT_FILE &&
+		./bos_build_system    $PROJECT_FILE &&
+		./bos_build_initrd    $PROJECT_FILE &&
+		./bos_build_kernels   $PROJECT_FILE &&
+		./bos_finish          $PROJECT_FILE &&
+		./bos_create_iso      $PROJECT_FILE
+	fi &&
+
+	echo "bos: done"
+fi
+
