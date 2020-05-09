@@ -84,19 +84,21 @@ unmount_images()
 function unmount()
 {
     local free_loop=$1
-    local mount_point=$2
 
-    if [ -d "$mount_point" ]
-    then
-	    local info=`grep "$mount_point" /system/processes/mounts`
-		local loop_device=`echo $info | cut -d' ' -f1`
+    for mount_point in $2
+    do
+	    if [ -d "$mount_point" ]
+    	then
+	    	local info=`grep "$mount_point" /system/processes/mounts`
+			local loop_device=`echo $info | cut -d' ' -f1`
 
-	    if [ -n "$info" ]
-	    then
-	        ${UMOUNT} $free_loop $mount_point
-			${LOSETUP} -d "$loop_device"
-	    fi
-	fi
+		    if [ -n "$info" ]
+		    then
+	    	    ${UMOUNT} $free_loop $mount_point
+				${LOSETUP} -d "$loop_device"
+		    fi
+		fi
+	done
 }
 
 main "$@"
