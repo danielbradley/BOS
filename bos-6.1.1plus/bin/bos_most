@@ -29,7 +29,9 @@ else
 	if [ "TRUE" != "$MOUNT" ]
 	then
 		./bos_prepare         $PROJECT_FILE &&
-		./bos_build_toolchain $PROJECT_FILE
+		./bos_build_toolchain $PROJECT_FILE &&
+		./bos_build_system    $PROJECT_FILE 
+
 	fi &&
 
 	echo "bos: done"
