@@ -65,20 +65,22 @@ process_arguments()
 
 unmount_images()
 {
-        local MountPoint="$1"
+    local MountPoint="$1"
 
-        unmount -d "${MountPoint}/system/devices/pts"
-        unmount -d "${MountPoint}/system/devices/shm"
-        unmount -d "${MountPoint}/system/devices"
-        unmount -d "${MountPoint}/local"
-        unmount -d "${MountPoint}/mnt"
-        unmount -d "${MountPoint}/system/features/*"
-        unmount -d "${MountPoint}/system/mounts/INITRD"
-        unmount -d "${MountPoint}/system/processes"
-        unmount -d "${MountPoint}/system"
-        unmount -d "${MountPoint}/tools"
-        unmount -d "${MountPoint}"
-        unmount -d /tools
+    unmount -d "${MountPoint}/system/devices/pts"
+    unmount -d "${MountPoint}/system/devices/shm"
+    unmount -d "${MountPoint}/system/devices"
+    unmount -d "${MountPoint}/local"
+    unmount -d "${MountPoint}/mnt"
+    unmount -d "${MountPoint}/system/features/*"
+    unmount -d "${MountPoint}/system/mounts/INITRD"
+    unmount -d "${MountPoint}/system/processes"
+    unmount -d "${MountPoint}/system"
+    unmount -d "${MountPoint}/tools"
+    unmount -d "${MountPoint}"
+    unmount -d /tools
+
+    return 0
 }
 
 function unmount()
