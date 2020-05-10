@@ -4,36 +4,90 @@
 #       Copyright (c) 2004-2020 Daniel Robert Bradley. All rights reserved.
 #
 
-if [ "--mount" == "$1" ]
-then
-	MOUNT="TRUE"
-	shift
-fi 
+function main()
+{
+	local tools="FALSE"
+	local create="FALSE"
+	local mount="FALSE"
+	local prepare="FALSE"
+	local toolchain="FALSE"
+	local system="FALSE"
 
-PROJECT_FILE="$1"
+	while [ "--" = "${1:0:2}" ]
+	do
+		local suffix="${1:2}"
 
-if [ ! -f "$PROJECT_FILE" ]
-then
-	echo "Usage: bos_all [--mount] <bos project file>"
-else
-	source "$PROJECT_FILE" &&
-	mkdir -p "$TARGET/log" &&
+		case "$suffix" in
+		tools)
+			tools="TRUE"
+			;;
+		create)
+			create="TRUE"
+			;;
+		mount)
+			mount="TRUE"
+			;;
+		prepare)
+			prepare="TRUE"
+			;;
+		toolchain)
+			toolchain="TRUE"
+			;;
+		system)
+			system="TRUE"
+			;;
+		*)
+			echo "unrecognised option: $suffix"
+			;;
+		esac
+		shift
+	done
 
-	echo "Starting BOS with path: $PATH"
+	PROJECT_FILE="$1"
 
-	./bos_build_utils     "$PROJECT_FILE" &&
-	./bos_build_tools     "$PROJECT_FILE" &&
-	./bos_create          "$PROJECT_FILE" &&
-	./bos_mount           "$PROJECT_FILE" &&
-
-	if [ "TRUE" != "$MOUNT" ]
+	if [ ! -f "$PROJECT_FILE" ]
 	then
-		./bos_prepare         $PROJECT_FILE &&
-		./bos_build_toolchain $PROJECT_FILE &&
-		./bos_build_system    $PROJECT_FILE 
+		echo "Usage: bos_all [options] <bos project file>"
 
-	fi &&
+	else
+		source "$PROJECT_FILE" &&
+		mkdir -p "$TARGET/log" &&
 
-	echo "bos: done"
-fi
+		echo "Starting BOS with path: $PATH"
 
+		if [ "TRUE" = "$tools" ]
+		then
+			./bos_build_utils     "$PROJECT_FILE" &&
+			./bos_build_tools     "$PROJECT_FILE"
+		fi &&
+
+		if [ "TRUE" = "$create" ]
+		then
+			./bos_create          "$PROJECT_FILE"
+		fi &&
+
+		if [ "TRUE" = "$mount" ]
+		then
+			./bos_mount           "$PROJECT_FILE"
+		fi &&
+
+		if [ "TRUE" = "$prepare" ]
+		then
+			./bos_prepare         "$PROJECT_FILE"
+		fi &&
+
+		if [ "TRUE" = "$toolchain" ]
+		then
+			./bos_build_toolchain "$PROJECT_FILE"
+		fi &&
+
+		if [ "TRUE" = "$system" ]
+		then
+			./bos_build_system    "$PROJECT_FILE"
+		fi &&
+
+		echo "bos: done"
+	fi
+}
+
+main "$@"
