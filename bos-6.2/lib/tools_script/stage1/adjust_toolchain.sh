@@ -73,14 +73,15 @@ edit_gcc_specs()
 				gcc -dumpspecs                                                          > $SPECFILE &&
 				sed -i 's@^/system/software/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
 				sed -i                 's@^/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
+				cp $SPECFILE $BUILD_DIR/specs                                                       &&
 				unset LIBGCC_FILE_NAME SPECFILEDIR SPECFILE                                         &&
+
 
 				if [ ! -f "/tools/lib/gcc/i686-pc-linux-gnu/4.0.3/specs" ]
 				then
 					echo "Error: SPECFILE is missing: $SPECFILE"
 					return -1
 				else
-					cp $SPECFILE $BUILD_DIR/specs &&
 					touch $BUILD_DIR/ADJUSTED_GCC
 				fi
 			fi
