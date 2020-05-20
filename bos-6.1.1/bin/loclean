@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+#       Copyright (c) 2020 Daniel Robert Bradley. All rights reserved.
+#
+#
+#	loclean - clean up diry loopback devices
+#
+
+function cleanall()
+{
+	local ignored=''
+
+	for LO in /system/devices/loop*
+	do
+		ignored=`losetup -d "$LO" 2> /system/devices/null`
+	done
+}
+
+cleanall
+
+exit 0
