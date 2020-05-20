@@ -73,7 +73,7 @@ edit_gcc_specs()
 				gcc -dumpspecs                                                          > $SPECFILE &&
 				sed -i 's@^/system/software/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
 				sed -i                 's@^/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
-				cp $SPECFILE $BUILD_DIR/specs                                                       &&
+				cp $SPECFILE /local/bos/target/log/specs                                            &&
 				unset LIBGCC_FILE_NAME SPECFILEDIR SPECFILE                                         &&
 
 
