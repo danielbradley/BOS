@@ -45,22 +45,32 @@ reinstall_binutils()
 
 edit_gcc_specs()
 {
-	local SPECFILEDIR=`dirname $(gcc -print-libgcc-file-name)`
-	local SPECFILE="$SPECFILEDIR/specs"
-
 	if [ ! -f $BUILD_DIR/ADJUSTED_GCC ]
 	then
-		# Need to handle both cases:
-		# a) building from LFS
-		# b) building from SZT
 
-		echo "Creating gcc specs file: $SPECFILE"
-		gcc -dumpspecs                                                          > $SPECFILE &&
-		sed -i 's@^/system/software/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
-		sed -i                 's@^/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
-		unset SPECFILEDIR SPECFILE                                                          &&
+		local LIBGCC_FILE_NAME=`/tools/bin/gcc -print-libgcc-file-name`
+	
+		if [ "/tools/lib" != "${LIBGCC_FILE_NAME:0:10}" ]
+		then
+			echo "Error: /tools/bin/gcc is reporting incorrect libgcc-file-name"
+			return -1
 
-		touch $BUILD_DIR/ADJUSTED_GCC
+		else
+			local SPECFILEDIR=`dirname ${LIBGCC_FILE_NAME}`
+			local SPECFILE="$SPECFILEDIR/specs"
+
+			# Need to handle both cases:
+			# a) building from LFS
+			# b) building from SZT
+
+			echo "Creating gcc specs file: $SPECFILE"
+			gcc -dumpspecs                                                          > $SPECFILE &&
+			sed -i 's@^/system/software/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
+			sed -i                 's@^/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
+			unset LIBGCC_FILE_NAME SPECFILEDIR SPECFILE                                                          &&
+
+			touch $BUILD_DIR/ADJUSTED_GCC
+		fi
 	fi
 }
 
