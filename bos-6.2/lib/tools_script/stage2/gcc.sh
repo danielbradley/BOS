@@ -106,7 +106,8 @@ install_package()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
 			cd $BUILD/$PACKAGE-build &&
-			make install &&
+			exit -1
+			#make install &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
