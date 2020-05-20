@@ -59,17 +59,30 @@ edit_gcc_specs()
 			local SPECFILEDIR=`dirname ${LIBGCC_FILE_NAME}`
 			local SPECFILE="$SPECFILEDIR/specs"
 
-			# Need to handle both cases:
-			# a) building from LFS
-			# b) building from SZT
+			if [ "/tools/lib/gcc/i686-pc-linux-gnu/4.0.3/specs" != "$SPECFILE" ]
+			then
+				echo "Error: SPECFILE is wrong: $SPECFILE"
+				return -1
+			else
 
-			echo "Creating gcc specs file: $SPECFILE"
-			gcc -dumpspecs                                                          > $SPECFILE &&
-			sed -i 's@^/system/software/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
-			sed -i                 's@^/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
-			unset LIBGCC_FILE_NAME SPECFILEDIR SPECFILE                                                          &&
+				# Need to handle both cases:
+				# a) building from LFS
+				# b) building from SZT
 
-			touch $BUILD_DIR/ADJUSTED_GCC
+				echo "Creating gcc specs file: $SPECFILE"
+				gcc -dumpspecs                                                          > $SPECFILE &&
+				sed -i 's@^/system/software/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
+				sed -i                 's@^/lib/ld-linux.so.2@/tools/lib/ld-linux.so.2@g' $SPECFILE &&
+				unset LIBGCC_FILE_NAME SPECFILEDIR SPECFILE                                         &&
+
+				if [ ! -f "/tools/lib/gcc/i686-pc-linux-gnu/4.0.3/specs" ]
+				then
+					echo "Error: SPECFILE is missing: $SPECFILE"
+					return -1
+				else
+					touch $BUILD_DIR/ADJUSTED_GCC
+				fi
+			fi
 		fi
 	fi
 }
