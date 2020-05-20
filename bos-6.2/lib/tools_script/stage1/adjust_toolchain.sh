@@ -80,6 +80,7 @@ edit_gcc_specs()
 					echo "Error: SPECFILE is missing: $SPECFILE"
 					return -1
 				else
+					cp $SPECFILE $BUILD_DIR/specs &&
 					touch $BUILD_DIR/ADJUSTED_GCC
 				fi
 			fi
