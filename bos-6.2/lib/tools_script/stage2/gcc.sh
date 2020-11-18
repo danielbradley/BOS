@@ -105,8 +105,9 @@ install_package()
 	then
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
-			cd $BUILD/$PACKAGE-build &&
-			make install &&
+			cd $BUILD/$PACKAGE-build                                                    &&
+			make install                                                                &&
+			cp /local/bos/target/log/specs /tools/lib/gcc/i686-pc-linux-gnu/4.0.3/specs &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi

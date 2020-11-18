@@ -16,6 +16,8 @@
 
 main()
 {
+	ulimit unlimited
+
 	#printf "%s\n" "Stage 1: Create Images"
 
 	find_base_dir $@
