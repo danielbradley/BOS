@@ -25,6 +25,11 @@ read_headers()
 	PROJECT_DIR=`dirname $1`
 	source $1
         source $BASE_DIR/etc/bos.conf
+
+        if [ -n "$2" ]
+        then
+        	PROFILE="$2"
+        fi
 }
 
 process_arguments()
