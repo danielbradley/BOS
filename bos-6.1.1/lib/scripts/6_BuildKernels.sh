@@ -85,7 +85,7 @@ build_kernel()
 	local PKG=`basename $SCRIPT .sh`
 
 	$CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM \
-		PATH=/system/software/commands/development/gnu-2.95.3/bin:/system/software/bin:/bin:/tools/bin \
+		PATH=/system/software/bin:/bin:/tools/bin \
 		$SU system -s /tools/bin/bash -c "/mnt/software/kernels/$SCRIPT >> /mnt/log/${PKG}.log 2>&1" 
 }
 
