@@ -75,7 +75,7 @@ check_locations()
 build_system()
 {
 	#echo "Building the system"
-	su -c PATH=/system/software/bin\ $SCRIPT_SRC_DIR/5_BuildSystem.sh\ $PROJECT
+	su -c PATH=/system/software/bin\ $SCRIPT_SRC_DIR/5_BuildSystem.sh\ $PROJECT $PROFILE
 }
 
 main $@
