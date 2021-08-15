@@ -37,7 +37,7 @@ find_base_dir()
 
 read_headers()
 {
-	if [ $# -ne 1 ]
+	if [ $# -ne 1 -a $# -ne 2 ]
 	then
 		echo "Usage: bos <config file>"
 		exit 1
@@ -57,6 +57,11 @@ read_headers()
 		echo "bos: invalid or nonexistant configuration file"
 		exit 1
 	fi
+
+	if [ -n "$2" ]
+	then
+		PROFILE="$2"
+	fi
 }
 
 print_info()
@@ -74,8 +79,8 @@ check_locations()
 
 build_system()
 {
-	#echo "Building the system"
-	su -c PATH=/system/software/bin\ $SCRIPT_SRC_DIR/5_BuildSystem.sh\ $PROJECT $PROFILE
+	echo " $PROFILE"
+	su -c PATH=/system/software/bin\ $SCRIPT_SRC_DIR/5_BuildSystem.sh\ $PROJECT\ $PROFILE
 }
 
 main $@
