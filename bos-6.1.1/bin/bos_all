@@ -13,6 +13,7 @@ then
 fi 
 
 PROJECT_FILE="$1"
+PROFILE="$2"
 
 if [ ! -f "$PROJECT_FILE" ]
 then
@@ -30,13 +31,13 @@ else
 
 	if [ "TRUE" != "$MOUNT" ]
 	then
-		./bos_prepare         $PROJECT_FILE &&
-		./bos_build_toolchain $PROJECT_FILE &&
-		./bos_build_system    $PROJECT_FILE &&
-		./bos_build_initrd    $PROJECT_FILE &&
-		./bos_build_kernels   $PROJECT_FILE &&
-		./bos_finish          $PROJECT_FILE &&
-		./bos_create_iso      $PROJECT_FILE
+		./bos_prepare         "$PROJECT_FILE"            &&
+		./bos_build_toolchain "$PROJECT_FILE"            &&
+		./bos_build_system    "$PROJECT_FILE" "$PROFILE" &&
+		./bos_build_initrd    "$PROJECT_FILE"            &&
+		./bos_build_kernels   "$PROJECT_FILE"            &&
+		./bos_finish          "$PROJECT_FILE"            &&
+		./bos_create_iso      "$PROJECT_FILE"
 	fi &&
 
 	echo "bos: done"
