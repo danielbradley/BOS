@@ -13,13 +13,18 @@ then
 fi 
 
 PROJECT_FILE="$1"
-PROFILE="$2"
 
 if [ ! -f "$PROJECT_FILE" ]
 then
 	echo "Usage: bos_all [--mount] <bos project file>"
 else
 	source "$PROJECT_FILE" &&
+
+	if [ -n $2 ]
+	then
+		PROFILE=$2
+	fi
+
 	mkdir -p "$TARGET/log" &&
 
 	echo "Starting BOS with path: $PATH"
