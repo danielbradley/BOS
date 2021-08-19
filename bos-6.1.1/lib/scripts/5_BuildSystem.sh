@@ -28,7 +28,7 @@ read_headers()
 
         if [ -n "$2" ]
         then
-        	PROFILE="$2"
+        	OVERRIDE_PROFILE="$2"
         fi
 }
 
@@ -41,7 +41,14 @@ process_arguments()
 
 build_system()
 {
-	local PROFILE=$MOUNT_POINT/mnt/software/${PROFILE}
+	local PROFILE_PATH=""
+
+	if [ -n "$OVERRIDE_PROFILE" ]
+	then
+		PROFILE_PATH=$MOUNT_POINT/mnt/software/${OVERRIDE_PROFILE}
+	else
+		PROFILE_PATH=$MOUNT_POINT/mnt/software/${PROFILE}
+	fi
 
 	#	The profile file specifies the order directories
 	#	should be built in.
@@ -93,7 +100,7 @@ build_system()
 			run_ldconfig >> $LOG 2>&1
 		fi
 
-	done < $PROFILE
+	done < $PROFILE_PATH
 
 }
 
