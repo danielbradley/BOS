@@ -6,7 +6,7 @@
 SOURCE=$BUILD_BASE/tools/source	# Where source packages are located
 BUILD=$BUILD_BASE/tools/helper	# Where this package should be built
 
-PACKAGE=squashfs		# Package information
+PACKAGE=squashfs-tools		# Package information
 VERSION=4.5.1			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
