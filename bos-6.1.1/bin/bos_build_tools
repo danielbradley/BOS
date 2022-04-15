@@ -208,7 +208,8 @@ mount_image()
 {
 	if [ ! -d /tools ]
 	then
-		mkdir /tools
+		printf "Creating /tools\n"
+		sudo mkdir -p /tools
 	fi
 	
 	if [ -d /tools/lost+found -o -d /tools/bin ]
@@ -216,7 +217,8 @@ mount_image()
 		printf "bos_build_tools: $IMAGE (already mounted)\n" >> $LOG 2>&1
 		#printf "bos_build_tools: $IMAGE (already mounted)\n"
 	else
-		mount $IMAGE /tools -o loop >> $LOG 2>&1
+		printf "Mounting image to /tools\n"
+		sudo mount $IMAGE /tools -o loop >> $LOG 2>&1
 		printf "bos_build_tools: $IMAGE (mounted)\n"
 	fi
 }
