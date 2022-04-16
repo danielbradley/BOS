@@ -74,7 +74,7 @@ unmount_images()
         unmount -d "${MountPoint}/mnt"
         unmount -d "${MountPoint}/system/features/*"
         unmount -d "${MountPoint}/system/mounts/INITRD"
-        unmount -d "${MountPoint}/system/processes"
+        unmount    "${MountPoint}/system/processes"
         unmount -d "${MountPoint}/system"
         unmount -d "${MountPoint}/tools"
         unmount -d "${MountPoint}"
@@ -91,7 +91,11 @@ function unmount()
         if [ -n "$info" ]
         then
                 ${UMOUNT} $free_loop $mount_point
-		${LOSETUP} -d "$loop_device"
+
+		if [ "-d" == "$free_loop" ]
+		then
+			${LOSETUP} -d "$loop_device"
+		fi
         fi
 }
 
