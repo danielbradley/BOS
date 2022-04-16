@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source	# Where source packages are located
 BUILD=$BUILD_BASE/tools/helper	# Where this package should be built
 
 PACKAGE=squashfs-tools		# Package information
-VERSION=4.5.1			# Version information
+VERSION=3.3			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -78,7 +78,7 @@ compile_source()
 		if [ ! -f $BUILD/$PACKAGE-$VERSION/SUCCESS.MAKE ]
 		then
 			cd $BUILD/$PACKAGE-$VERSION &&
-			cd squashfs-tools
+			cd squashfs-tools &&
 			make INSTALL_PREFIX=/opt/schily &&
 			touch $BUILD/$PACKAGE-$VERSION/SUCCESS.MAKE
 		fi
