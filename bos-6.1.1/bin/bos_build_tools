@@ -18,7 +18,7 @@ main()
 	mount_image                &&
 	build_tools                &&
 	cp /local/settings/lsb/resolv.conf /tools/etc &&
-    chmod 644 /tools/etc/resolv.conf              &&
+	chmod 644 /tools/etc/resolv.conf              &&
 	echo done
 }
 	
@@ -209,7 +209,7 @@ mount_image()
 	if [ ! -d /tools ]
 	then
 		printf "Creating /tools\n"
-		sudo mkdir -p /tools
+		mkdir -p /tools
 	fi
 	
 	if [ -d /tools/lost+found -o -d /tools/bin ]
@@ -218,7 +218,7 @@ mount_image()
 		#printf "bos_build_tools: $IMAGE (already mounted)\n"
 	else
 		printf "Mounting image to /tools\n"
-		sudo mount $IMAGE /tools -o loop >> $LOG 2>&1
+		mount $IMAGE /tools -o loop >> $LOG 2>&1
 		printf "bos_build_tools: $IMAGE (mounted)\n"
 	fi
 }
