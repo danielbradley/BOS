@@ -190,7 +190,7 @@ print_usage()
 create_tools_image()
 {
 	local DevZero="/dev/zero"
-	if [ ! -f "${DevZero}" ]
+	if [ ! -e "${DevZero}" ]
 	then
 		DevZero="/system/devices/zero"
 	fi
