@@ -89,7 +89,6 @@ create_image()
 {
 	local IMAGE_SPEC=$1
 	local IMAGE_DIR=$TARGET
-	local SCRIPT_DIR=$GLOBAL_PREP_SCRIPT_DIR
 
 	if [ -f $IMAGE_SPEC ]
 	then
