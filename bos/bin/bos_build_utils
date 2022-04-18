@@ -49,7 +49,7 @@ run_scripts()
 
 	}
 
-	local SCRIPTDIR=$BASE_DIR/lib/tools_script
+	local SCRIPTDIR=$BASE_DIR/lib/tools_script/$BOS_VERSION
 
 	source $SCRIPTDIR/helper/smake.sh              >> $LOG 2>&1 &&
 	printf "#" &&
