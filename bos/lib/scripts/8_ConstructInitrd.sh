@@ -32,8 +32,6 @@ process_arguments()
 {
 	IMAGE_NAME=`basename $TARGET`
         MOUNT_POINT=$VAR_DIR/$NAMESPACE/$IMAGE_NAME
-
-	INITRD_BIN=$INITRD/bin
 }
 
 build_boot()
