@@ -17,9 +17,6 @@ main()
 	create_virtual_root_mountpoint #&&
 	mount_root_image &&
 	mount_images
-
-##	mount_tools &&
-##	mount_proc &&
 }
 
 find_base_dir()
@@ -253,24 +250,6 @@ create_directories()
 #		echo mkdir -p $MOUNT_POINT/$IMAGE_MP/$DIRECTORY
 		mkdir -p $MOUNT_POINT/$IMAGE_MP/$DIRECTORY
 	done
-}
-
-mount_tools()
-{
- 	if [ ! -d $MOUNT_POINT/tools/software ]
-	then
-		echo Mounting tools >> $LOG 2>&1
-		$MOUNT $TOOLS_IMAGE -o loop,ro $MOUNT_POINT/tools >> $LOG 2>&1
-	fi
-}
-
-mount_proc()
-{
-	if [ ! -L $MOUNT_POINT/$PROC_DIR/self ]
-	then
-		echo Mounting proc >> $LOG 2>&1
-		$MOUNT proc -t proc $MOUNT_POINT/$PROC_DIR >> $LOG 2>&1
-	fi
 }
 
 main $@
