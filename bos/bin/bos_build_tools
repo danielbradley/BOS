@@ -53,7 +53,7 @@ run_scripts()
 
 	}
 
-	local SCRIPTDIR=$BASE_DIR/lib/tools_script
+	local SCRIPTDIR=$BASE_DIR/lib/tools_script/$BOS_VERSION
 
 	source $SCRIPTDIR/stage1/binutils.sh           >> $LOG 2>&1 &&
 	printf "#" &&
@@ -164,7 +164,7 @@ check_args()
 				PROJECT_DIR=`dirname $1`
 				PROJECT=$1
 				source $PROJECT
-                                source $BASE_DIR/etc/bos.conf
+                source $BASE_DIR/etc/bos.conf
                                                                  
 				BUILD_BASE=$BUILD
 				
