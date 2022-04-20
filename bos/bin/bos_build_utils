@@ -38,7 +38,7 @@ run_scripts()
 	download()
 	{
 		local File=$1
-		local Url=${RESOURCE_URL}/${PKG_DIR}/${File}
+		local Url=${BOS_SOURCE_URL}/${PKG_DIR}/${File}
 
 		mkdir -p ${SOURCE} &&
 		cd ${SOURCE} &&
