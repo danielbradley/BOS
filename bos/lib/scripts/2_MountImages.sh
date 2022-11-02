@@ -166,7 +166,12 @@ mount_image()
 	then
 		MOUNT_FLAGS="-o $FLAGS"
 	fi
-				
+
+	if [ "$IMAGE_MP" == "/tools" ]
+	then
+		IMAGE_NAME="../$TOOLS_IMAGE_NAME"
+	fi
+
 #	printf "2) Mounting image: %s\n" $IMAGE_NAME
 #	printf "\t\tMounting %s --> %s\n" $TARGET/$IMAGE_NAME $MOUNT_POINT$IMAGE_MP
 
