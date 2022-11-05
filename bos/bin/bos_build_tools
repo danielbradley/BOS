@@ -57,6 +57,25 @@ run_scripts()
 
 	source $SCRIPTDIR/stage1/binutils.sh           >> $LOG 2>&1 &&
 	printf "#" &&
+
+	if [ -f $SCRIPTDIR/stage1/gmp.sh ]
+	then
+		source $SCRIPTDIR/stage1/gmp.sh        >> $LOG 2>&1 &&
+		printf "#"
+	fi                                                          &&
+
+	if [ -f $SCRIPTDIR/stage1/mpfr.sh ]
+	then
+		source $SCRIPTDIR/stage1/mpfr.sh       >> $LOG 2>&1 &&
+		printf "#"
+	fi                                                          &&
+
+	if [ -f $SCRIPTDIR/stage1/mpc.sh ]
+	then
+		source $SCRIPTDIR/stage1/mpc.sh        >> $LOG 2>&1 &&
+		printf "#"
+	fi                                                          &&
+
 	source $SCRIPTDIR/stage1/gcc.sh                >> $LOG 2>&1 &&
 	printf "#" &&
 	source $SCRIPTDIR/stage1/linux-libc-headers.sh >> $LOG 2>&1 &&
