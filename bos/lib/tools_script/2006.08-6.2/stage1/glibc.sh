@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=glibc			# Package information
-VERSION=2.3.4			# Version information
+VERSION=2.3.6			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -48,10 +48,8 @@ apply_patches()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
-			cd $BUILD_DIR/$PACKAGE-$VERSION
-			patch -Np1 -i $SOURCE/$PACKAGE-$VERSION-fix_test*.patch
-
-			sed -i 's@/etc@/tools/etc@g' sysdeps/unix/sysv/linux/paths.h
+			cd $BUILD_DIR/$PACKAGE-$VERSION                              &&
+			sed -i 's@/etc@/tools/etc@g' sysdeps/unix/sysv/linux/paths.h &&
 			
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
@@ -67,7 +65,6 @@ configure_source()
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build &&
 
-#			CFLAGS="-march=i386 -O2"
 			../$PACKAGE-$VERSION/configure \
 				--prefix=$GNU_PREFIX \
 				--disable-profile --enable-add-ons \
@@ -75,8 +72,8 @@ configure_source()
 				--with-binutils=/tools/bin \
 				--without-gd --with-headers=/tools/include \
 				--without-selinux \
-				--sysconfdir=$GNU_PREFIX/etc
-#				--host=$CHOST --target=$CHOST &&
+				--sysconfdir=$GNU_PREFIX/etc &&
+
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
@@ -101,15 +98,15 @@ install_package()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
-			cd $BUILD_DIR/$PACKAGE-build &&
-			mkdir -v $GNU_PREFIX/etc
-			touch $GNU_PREFIX/etc/ld.so.conf
-			#echo "111.125.177.87 www.securizant.org" > $GNU_PREFIX/etc/hosts
-			cp $PROJECT_DIR/resources/static/default_settings/2008/users/passwd $GNU_PREFIX/etc/passwd
-			cp $PROJECT_DIR/resources/static/default_settings/2008/users/group  $GNU_PREFIX/etc/group
+			cd $BUILD_DIR/$PACKAGE-build     &&
+			mkdir -v $GNU_PREFIX/etc         &&
+			touch $GNU_PREFIX/etc/ld.so.conf &&
 
-			chmod 644 $GNU_PREFIX/etc/passwd
-			chmod 644 $GNU_PREFIX/etc/group
+			cp $PROJECT_DIR/resources/static/default_settings/2008/users/passwd $GNU_PREFIX/etc/passwd &&
+			cp $PROJECT_DIR/resources/static/default_settings/2008/users/group  $GNU_PREFIX/etc/group  &&
+
+			chmod 644 $GNU_PREFIX/etc/passwd &&
+			chmod 644 $GNU_PREFIX/etc/group  &&
 
 			make install &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
