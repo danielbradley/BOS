@@ -4,6 +4,21 @@
 #       Copyright (c) 2004-2006 Daniel Robert Bradley. All rights reserved.
 #
 
+BASH=`which bash`
+
+if [ -z "BASH" ]
+then
+	BASH="/system/software/bin/bash"
+fi
+
+function step()
+{
+	if [ "$STEP" == "TRUE" ]
+	then
+		$BASH
+	fi
+}
+
 #PATH=$PATH:/local/bos/checkouts/BOS/bos-6.1.1/lib/bin
 
 if [ "--mount" == "$1" ]
@@ -12,11 +27,17 @@ then
 	shift
 fi 
 
+if [ "--step" == "$1" ]
+then
+	STEP="TRUE"
+	shift
+fi 
+
 PROJECT_FILE="$1"
 
 if [ ! -f "$PROJECT_FILE" ]
 then
-	echo "Usage: bos_all [--mount] <bos project file>"
+	echo "Usage: bos_all [--mount] [--step] <bos project file>"
 else
 	source "$PROJECT_FILE" &&
 
@@ -29,19 +50,19 @@ else
 
 	echo "Starting BOS with path: $PATH"
 
-	./bos_build_utils     "$PROJECT_FILE" &&
-	./bos_build_tools     "$PROJECT_FILE" &&
-	./bos_create          "$PROJECT_FILE" &&
-	./bos_mount           "$PROJECT_FILE" &&
+	./bos_build_utils     "$PROJECT_FILE" && step &&
+	./bos_build_tools     "$PROJECT_FILE" && step &&
+	./bos_create          "$PROJECT_FILE" && step &&
+	./bos_mount           "$PROJECT_FILE" && step &&
 
 	if [ "TRUE" != "$MOUNT" ]
 	then
-		./bos_prepare         "$PROJECT_FILE"            &&
-		./bos_build_toolchain "$PROJECT_FILE"            &&
-		./bos_build_system    "$PROJECT_FILE" "$PROFILE" &&
-		./bos_build_initrd    "$PROJECT_FILE"            &&
-		./bos_build_kernels   "$PROJECT_FILE"            &&
-		./bos_finish          "$PROJECT_FILE"            &&
+		./bos_prepare         "$PROJECT_FILE"            && step &&
+		./bos_build_toolchain "$PROJECT_FILE"            && step &&
+		./bos_build_system    "$PROJECT_FILE" "$PROFILE" && step &&
+		./bos_build_initrd    "$PROJECT_FILE"            && step &&
+		./bos_build_kernels   "$PROJECT_FILE"            && step &&
+		./bos_finish          "$PROJECT_FILE"            && step &&
 		./bos_create_iso      "$PROJECT_FILE"
 	fi &&
 
