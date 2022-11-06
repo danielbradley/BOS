@@ -64,6 +64,10 @@ populate_ISO_directory()
 	mkdir -p ${Kernels}
 	mkdir -p ${Images}
 
+	sed -i "s|%EDITION%|$EDITION|g" ${MOUNT_POINT}/system/startup/configuration/menu.lst
+	sed -i "s|%RELEASE%|$RELEASE|g" ${MOUNT_POINT}/system/startup/configuration/menu.lst
+	sed -i "s|%KERNEL%|$KERNEL|g"   ${MOUNT_POINT}/system/startup/configuration/menu.lst
+
 	cp ${MOUNT_POINT}/system/software/kernels/linux* ${Kernels}
 	cp ${MOUNT_POINT}/system/software/commands/utils/grub-*/lib/grub/i386-pc/stage2_eltorito ${Grub}
 	cp ${MOUNT_POINT}/system/startup/configuration/menu.lst ${Grub}
