@@ -21,9 +21,6 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	download ${PACKAGE}-${VERSION}-fix_test-1.patch &&
-	download ${PACKAGE}-${VERSION}-rtld_search_dirs-1.patch &&
-	download ${PACKAGE}-${VERSION}-tls_assert-1.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
