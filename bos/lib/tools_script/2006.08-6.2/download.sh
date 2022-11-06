@@ -6,7 +6,7 @@
 download()
 {
 	local File=$1
-	local Url=${RESOURCE_URL}/${PKG_DIR}/${File}
+	local Url=${SZT_SOURCE_URL}/${PKG_DIR}/${File}
 
 	mkdir -p ${SOURCE} &&
 	cd ${SOURCE} &&
