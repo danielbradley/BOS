@@ -6,10 +6,10 @@
 SOURCE=$BUILD_BASE/tools/source	# Where source packages are located
 BUILD=$BUILD_BASE/tools/stage2	# Where this package should be built
 
-PACKAGE=gcc			# Package information
-VERSION=3.4.3			# Version information
+PACKAGE=gcc						# Package information
+VERSION=4.0.3					# Version information
 
-GNU_PREFIX=/tools		# Prefix packages are installed into
+GNU_PREFIX=/tools				# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
