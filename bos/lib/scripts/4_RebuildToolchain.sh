@@ -70,7 +70,7 @@ rebuild_toolchain()
 	chmod 644 $MOUNT_POINT/local/settings/system/meta/*
 	ln -sf ../system/meta/hosts $MOUNT_POINT/local/settings/lsb
 
-	for TOOL in linux-libc-headers glibc binutils gcc-3.4.3
+	for TOOL in linux-libc-headers glibc binutils gcc
 	do
 		echo $CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM LC_ALL=POSIX \
 				PATH=/system/software/bin:/bin:/tools/bin \
