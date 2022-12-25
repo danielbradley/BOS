@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=gawk			# Package information
-VERSION=3.1.4			# Version information
+VERSION=3.1.5			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
