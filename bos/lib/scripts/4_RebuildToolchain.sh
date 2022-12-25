@@ -72,20 +72,21 @@ rebuild_toolchain()
 
 	for TOOL in linux-libc-headers glibc binutils gcc-3.4.3
 	do
-	echo $CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM LC_ALL=POSIX \
-			PATH=/system/software/bin:/bin:/tools/bin \
-			$SU root -s /tools/bin/bash -c "/mnt/software/toolchain/$TOOL.sh +h" >> $LOG 2>&1 
-	$CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM LC_ALL=POSIX \
-			PATH=/system/software/bin:/bin:/tools/bin \
-			$SU root -s /tools/bin/bash -c /mnt/software/toolchain/$TOOL.sh +h >> $LOG 2>&1
-	if [ $? -eq 0 ]
-	then
-		printf " #"
-	else
-		printf " X"
-		return -1;
-	fi
+		echo $CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM LC_ALL=POSIX \
+				PATH=/system/software/bin:/bin:/tools/bin \
+				$SU root -s /tools/bin/bash -c "/mnt/software/toolchain/$TOOL.sh +h" >> $LOG 2>&1
 
+		$CHROOT $MOUNT_POINT /tools/bin/env -i RESOURCE_URL=$RESOURCE_URL HOME=/ TERM=$TERM LC_ALL=POSIX \
+				PATH=/system/software/bin:/bin:/tools/bin \
+				$SU root -s /tools/bin/bash -c /mnt/software/toolchain/$TOOL.sh +h >> $LOG 2>&1
+
+		if [ $? -eq 0 ]
+		then
+			printf " #"
+		else
+			printf " X"
+			return -1;
+		fi
 	done
 }
 
