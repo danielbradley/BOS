@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=coreutils		# Package information
-VERSION=5.2.1			# Version information
+VERSION=5.96			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
@@ -62,7 +62,8 @@ configure_source()
 			cd $BUILD/$PACKAGE-$VERSION &&
 
 #			CFLAGS="-march=i386"
-			DEFAULT_POSIX2_VERSION=199209 ./configure \
+#			DEFAULT_POSIX2_VERSION=199209
+			./configure \
 				--prefix=$GNU_PREFIX &&
 #				--host=$CHOST --target=$CHOST &&
 			touch /$BUILD/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
