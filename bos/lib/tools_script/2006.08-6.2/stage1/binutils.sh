@@ -10,12 +10,11 @@ PACKAGE=binutils		# Package information
 VERSION=2.16.1			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
-ARCH=`uname -m`
 
 CHOST=""
 if [ -f "/.dockerenv" ]
 then
-	CHOST="--host=${ARCH}-linux-gnu"
+	CHOST="--host=arch64-linux-gnu"
 
 fi
 
