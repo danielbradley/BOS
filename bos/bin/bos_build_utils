@@ -49,14 +49,20 @@ run_scripts()
 
 	}
 
+	local mksquashfs=`which mksquashfs`
+
 	local SCRIPTDIR=$BASE_DIR/lib/tools_script/$BOS_VERSION
 
 	source $SCRIPTDIR/helper/smake.sh              >> $LOG 2>&1 &&
 	printf "#" &&
 	source $SCRIPTDIR/helper/cdrtools.sh           >> $LOG 2>&1 &&
 	printf "#" &&
-	source $SCRIPTDIR/helper/squashfs.sh           >> $LOG 2>&1 &&
-	printf "#"
+
+	if [ -z "$mksquashfs" ]
+	then
+		source $SCRIPTDIR/helper/squashfs.sh           >> $LOG 2>&1 &&
+		printf "#"
+	fi
 }
 
 find_base_dir()
