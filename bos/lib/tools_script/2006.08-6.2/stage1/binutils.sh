@@ -10,8 +10,14 @@ PACKAGE=binutils		# Package information
 VERSION=2.16.1			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
+ARCH=`uname -m`
 
-#CHOST=i386-pc-linux-gnu
+CHOST=""
+if [ -f "/.dockerenv" ]
+then
+	CHOST="--host=${ARCH}-linux-gnu"
+
+fi
 
 ARCHIVE=tar.bz2
 PKG_DIR=core/toolchain
@@ -63,7 +69,7 @@ configure_source()
 			#CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
 				--prefix=$GNU_PREFIX \
-				--disable-nls
+				--disable-nls $CHOST
 #				--host=$CHOST --target=$CHOST &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
