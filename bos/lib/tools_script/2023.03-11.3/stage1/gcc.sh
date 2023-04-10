@@ -82,32 +82,40 @@ configure_source()
 			cd $BUILD_DIR/$PACKAGE-build       &&
 
 			../$PACKAGE-$VERSION/configure    \
-				--target=$TARGET              \
 				--prefix=$GNU_PREFIX          \
-				--with-glibc-version=2.37     \
-				--with-sysroot=/              \
 				--libexecdir=/tools/lib       \
 				--with-local-prefix=/tools    \
-				--with-newlib                 \
-				--without-headers             \
-				--enable-default-pie          \
-				--enable-default-ssp          \
-				--disable-nls                 \
-				--disable-shared              \
-				--disable-multilib            \
-				--disable-threads             \
-				--disable-libatomic           \
-				--disable-libgomp             \
-				--disable-libquadmath         \
-				--disable-libssp              \
-				--disable-libvtv              \
-				--disable-libstdcxx           \
+				--disable-nls --enable-shared \
 				--enable-languages=c          &&
+
+#			../$PACKAGE-$VERSION/configure    \
+#				--target=$TARGET              \
+#				--prefix=$GNU_PREFIX          \
+#				--with-glibc-version=2.37     \
+#				--libexecdir=/tools/lib       \
+#				--with-local-prefix=/tools    \
+#				--with-newlib                 \
+#				--without-headers             \
+#				--enable-default-pie          \
+#				--enable-default-ssp          \
+#				--disable-nls                 \
+#				--disable-shared              \
+#				--disable-multilib            \
+#				--disable-threads             \
+#				--disable-libatomic           \
+#				--disable-libgomp             \
+#				--disable-libquadmath         \
+#				--disable-libssp              \
+#				--disable-libvtv              \
+#				--disable-libstdcxx           \
+#				--enable-languages=c          &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
 }
+
+				#--with-sysroot=/local/bos/target/              \
 
 compile_source()
 {
@@ -116,6 +124,7 @@ compile_source()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE ]
 		then
 			cd $BUILD_DIR/$PACKAGE-build &&
+			export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./mpc/src/.libs
 			make &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE
 		fi
