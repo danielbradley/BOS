@@ -73,9 +73,7 @@ configure_source()
 				--prefix=$GNU_PREFIX \
 				--disable-nls $CHOST \
 				--enable-gprofng=no  \
-				--disable-werror \
-				#$BUILD $HOST $TARGET \
-				&&
+				--disable-werror &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
