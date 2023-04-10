@@ -21,12 +21,15 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	unpack_package &&
-	apply_patches &&
-	configure_source &&
-	compile_source &&
-	install_package &&
-	complete &&
+	download mpfr-4.2.0.tar.xz                &&
+	download gmp-6.2.1.tar.xz                 &&
+	download mpc-1.3.1.tar.xz                 &&
+	unpack_package                            &&
+	apply_patches                             &&
+	configure_source                          &&
+	compile_source                            &&
+	install_package                           &&
+	complete                                  &&
 	echo done
 }
 
@@ -34,8 +37,21 @@ unpack_package()
 {
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
-		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -xvf $SOURCE/$PACKAGE-$VERSION.${ARCHIVE}
+		mkdir -p $BUILD_DIR                                         &&
+		tar -C $BUILD_DIR -xvf $SOURCE/$PACKAGE-$VERSION.${ARCHIVE} &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -xvf mpfr-4.2.0.tar.xz  &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -xvf gmp-6.2.1.tar.xz   &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -xvf mpc-1.3.1.tar.xz   &&
+
+		mv $BUILD_DIR/$PACKAGE-$VERSION/mpfr-4.2.0 \
+		   $BUILD_DIR/$PACKAGE-$VERSION/mpfr                        &&
+
+		mv $BUILD_DIR/$PACKAGE-$VERSION/gmp-6.2.1 \
+		   $BUILD_DIR/$PACKAGE-$VERSION/gmp                         &&
+
+		mv $BUILD_DIR/$PACKAGE-$VERSION/mpc-1.3.1 \
+		   $BUILD_DIR/$PACKAGE-$VERSION/mpc
+
 	fi
 }
 
@@ -60,14 +76,14 @@ configure_source()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE ]
 		then
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
-			cd $BUILD_DIR/$PACKAGE-build &&
+			cd $BUILD_DIR/$PACKAGE-build       &&
 
 			../$PACKAGE-$VERSION/configure \
 				--prefix=$GNU_PREFIX \
 				--libexecdir=/tools/lib \
 				--with-local-prefix=/tools \
 				--disable-nls --enable-shared \
-				--enable-languages=c &&
+				--enable-languages=c           &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
