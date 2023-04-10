@@ -12,10 +12,10 @@ VERSION=2.40			# Version information
 GNU_PREFIX=/tools		# Prefix packages are installed into
 ARCH=`uname -m`
 
-CHOST=""
+HOST=""
 if [ -f "/.dockerenv" ]
 then
-	CHOST="--host=${ARCH}-linux-gnu"
+	HOST="--host=${ARCH}-linux-gnu"
 
 fi
 
@@ -69,8 +69,11 @@ configure_source()
 			#CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
 				--prefix=$GNU_PREFIX \
-				--disable-nls $CHOST
-#				--host=$CHOST --target=$CHOST &&
+				--disable-nls $CHOST \
+				--enable-gprofng=no  \
+				--disable-werror \
+				$BUILD $HOST $TARGET \
+				&&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
