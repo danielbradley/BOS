@@ -102,7 +102,7 @@ configure_source()
 				--disable-libssp              \
 				--disable-libvtv              \
 				--disable-libstdcxx           \
-				--enable-languages=c,c++       &&
+				--enable-languages=c          &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
