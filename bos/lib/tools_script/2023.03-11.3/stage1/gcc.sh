@@ -6,14 +6,14 @@
 SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
-PACKAGE=gcc			# Package information
-VERSION=4.0.3			# Version information
+PACKAGE=gcc				# Package information
+VERSION=12.2.0			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
+ARCHIVE=tar.xz
 PKG_DIR=core/toolchain
 
 main()
@@ -35,7 +35,7 @@ unpack_package()
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.${ARCHIVE}
 	fi
 }
 
@@ -62,14 +62,12 @@ configure_source()
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build &&
 
-#			CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
 				--prefix=$GNU_PREFIX \
 				--libexecdir=/tools/lib \
 				--with-local-prefix=/tools \
 				--disable-nls --enable-shared \
-				--enable-languages=c
-#				--host=$CHOST --target=$CHOST &&
+				--enable-languages=c &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
