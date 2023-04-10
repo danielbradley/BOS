@@ -44,7 +44,7 @@ unpack_package()
 		tar -C $BUILD_DIR -xvf $SOURCE/$PACKAGE-$VERSION.${ARCHIVE} &&
 		tar -C $BUILD_DIR/$PACKAGE-$VERSION -xvf mpfr-4.2.0.tar.xz  &&
 		tar -C $BUILD_DIR/$PACKAGE-$VERSION -xvf gmp-6.2.1.tar.xz   &&
-		tar -C $BUILD_DIR/$PACKAGE-$VERSION -xvf mpc-1.3.1.tar.xz   &&
+		tar -C $BUILD_DIR/$PACKAGE-$VERSION -xvf mpc-1.3.1.tar.gz   &&
 
 		mv $BUILD_DIR/$PACKAGE-$VERSION/mpfr-4.2.0 \
 		   $BUILD_DIR/$PACKAGE-$VERSION/mpfr                        &&
