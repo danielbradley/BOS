@@ -116,7 +116,7 @@ compile_source()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE ]
 		then
 			cd $BUILD_DIR/$PACKAGE-build &&
-			make bootstrap &&
+			make &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE
 		fi
 	fi
