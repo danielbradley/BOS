@@ -12,14 +12,14 @@ VERSION=2.40			# Version information
 GNU_PREFIX=/tools		# Prefix packages are installed into
 ARCH=`uname -m`
 
-BUILD=""
-HOST=""
-TARGET=""
-if [ -f "/.dockerenv" ]
-then
-	HOST="--host=${ARCH}-linux-gnu"
-
-fi
+#BUILD=""
+#HOST=""
+#TARGET=""
+#if [ -f "/.dockerenv" ]
+#then
+#	HOST="--host=${ARCH}-linux-gnu"
+#
+#fi
 
 ARCHIVE=tar.xz
 PKG_DIR=core/toolchain
