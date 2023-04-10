@@ -11,6 +11,9 @@ VERSION=12.2.0			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
+MACHINE=`uname -m`
+TARGET=$MACHINE-szt-linux-gnu
+
 #CHOST=i386-pc-linux-gnu
 
 ARCHIVE=tar.xz
@@ -23,7 +26,7 @@ main()
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
 	download mpfr-4.2.0.tar.xz                &&
 	download gmp-6.2.1.tar.xz                 &&
-	download mpc-1.3.1.tar.xz                 &&
+	download mpc-1.3.1.tar.gz                 &&
 	unpack_package                            &&
 	apply_patches                             &&
 	configure_source                          &&
@@ -78,12 +81,29 @@ configure_source()
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build       &&
 
-			../$PACKAGE-$VERSION/configure \
-				--prefix=$GNU_PREFIX \
-				--libexecdir=/tools/lib \
-				--with-local-prefix=/tools \
-				--disable-nls --enable-shared \
-				--enable-languages=c           &&
+			../$PACKAGE-$VERSION/configure    \
+				--target=$TARGET              \
+				--prefix=$GNU_PREFIX          \
+				--with-glibc-version=2.37     \
+				--with-sysroot=/              \
+				--libexecdir=/tools/lib       \
+				--with-local-prefix=/tools    \
+				--with-newlib                 \
+				--without-headers             \
+				--enable-default-pie          \
+				--enable-default-ssp          \
+				--disable-nls                 \
+				--disable-shared              \
+				--disable-multilib            \
+				--disable-threads             \
+				--disable-libatomic           \
+				--disable-libgomp             \
+				--disable-libquadmath         \
+				--disable-libssp              \
+				--disable-libvtv              \
+				--disable-libstdcxx           \
+				--enable-languages=c,c++       &&
+
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
