@@ -19,7 +19,7 @@ then
 
 fi
 
-ARCHIVE=tar.xc
+ARCHIVE=tar.xz
 PKG_DIR=core/toolchain
 
 main()
@@ -41,7 +41,7 @@ unpack_package()
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.${ARCHIVE}
 	fi
 }
 
