@@ -125,7 +125,7 @@ compile_source()
 		then
 			cd $BUILD_DIR/$PACKAGE-build &&
 			export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./mpc/src/.libs
-			make &&
+			make bootstrap &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE
 		fi
 	fi
