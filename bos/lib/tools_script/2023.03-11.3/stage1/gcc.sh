@@ -12,7 +12,7 @@ VERSION=12.2.0			# Version information
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
 MACHINE=`uname -m`
-TARGET=$MACHINE-szt-linux-gnu
+TARGET=$MACHINE-unknown-linux-gnu
 
 #CHOST=i386-pc-linux-gnu
 
@@ -149,7 +149,12 @@ complete()
 {
 	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 	then
-		rm -rf $BUILD_DIR/$PACKAGE-$VERSION/*
+		local gcc=$TARGET-gcc
+		local dir=`$gcc -print-libgcc-file-name`
+
+		cd $BUILD_DIR/$PACKAGE-$VERSION 													&&
+		cat gcc/limitx.h gcc/glimits.h gcc/limity.h > ${dir}/install-tools/include/limits.h &&
+		rm -rf $BUILD_DIR/$PACKAGE-$VERSION/* 												&&
 		rm -rf $BUILD_DIR/$PACKAGE-build/*
 	fi
 }
