@@ -139,7 +139,7 @@ install_package()
 		then
 			cd $BUILD_DIR/$PACKAGE-build &&
 			make install &&
-			ln -s gcc /tools/bin/cc &&
+			ln -sf gcc /tools/bin/cc &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
