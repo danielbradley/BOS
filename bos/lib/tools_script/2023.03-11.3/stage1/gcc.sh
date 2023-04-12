@@ -150,7 +150,8 @@ complete()
 	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 	then
 		local gcc=$TARGET-gcc
-		local dir=`$gcc -print-libgcc-file-name`
+		local lib=`$gcc -print-libgcc-file-name`
+		local dir=`dirname $lib`
 
 		cd $BUILD_DIR/$PACKAGE-$VERSION 													&&
 		cat gcc/limitx.h gcc/glimits.h gcc/limity.h > ${dir}/install-tools/include/limits.h &&
