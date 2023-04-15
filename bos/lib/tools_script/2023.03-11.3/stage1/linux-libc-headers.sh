@@ -103,7 +103,7 @@ complete()
 {
 	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 	then
-		rm -rf $BUILD_DIR/$PACKAGE-$VERSION/*
+		echo rm -rf $BUILD_DIR/$PACKAGE-$VERSION/*
 	fi
 }
 
