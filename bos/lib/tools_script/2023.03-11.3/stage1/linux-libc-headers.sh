@@ -21,12 +21,12 @@ main()
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	unpack_package &&
-	#apply_patches &&
-	#configure_source &&
-	#compile_source &&
-	#install_package &&
-	#complete &&
+	unpack_package   &&
+	apply_patches    &&
+	configure_source &&
+	compile_source   &&
+	install_package  &&
+	complete         &&
 	echo done
 }
 
@@ -42,6 +42,58 @@ unpack_package()
 		#cp -Rv include/asm-i386 $GNU_PREFIX/include/asm
 		#cp -Rv include/linux    $GNU_PREFIX/include/linux
 		touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
+	fi
+}
+
+apply_patches()
+{
+	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/README ]
+	then
+		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
+		then
+			cd    $BUILD_DIR/$PACKAGE-$VERSION
+			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
+		fi
+	fi
+}
+
+
+configure_source()
+{
+	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
+	then
+		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE ]
+		then
+			cd    $BUILD_DIR/$PACKAGE-$VERSION
+			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
+		fi
+	fi
+}
+
+compile_source()
+{
+	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE ]
+	then
+		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE ]
+		then
+			cd    $BUILD_DIR/$PACKAGE-$VERSION             &&
+			make mrproper                                  &&
+			find usr/include -type f ! -name '*.h' -delete &&
+			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE
+		fi
+	fi
+}
+
+install_package()
+{
+	if [ -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE ]
+	then
+		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
+		then
+			cd    $BUILD_DIR/$PACKAGE-$VERSION             &&
+			cp -rv usr/include $GNU_PREFIX/usr             &&
+			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
+		fi
 	fi
 }
 
