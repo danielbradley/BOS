@@ -76,14 +76,16 @@ compile_source()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE ]
 		then
-			cd    $BUILD_DIR/$PACKAGE-$VERSION             &&
-			make mrproper                                  &&
-			make headers                                   &&
-			find usr/include -type f ! -name '*.h' -delete &&
+			cd    $BUILD_DIR/$PACKAGE-$VERSION             
+			make  mrproper                                  
+			make  headers                                   
+			find  usr/include -type f ! -name '*.h' -delete
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.MAKE
 		fi
 	fi
 }
+
+uapi/linux/errno.h
 
 install_package()
 {
