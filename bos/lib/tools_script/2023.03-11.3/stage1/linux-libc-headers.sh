@@ -92,6 +92,7 @@ install_package()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
 			cd    $BUILD_DIR/$PACKAGE-$VERSION                &&
+			mkdir -p $GNU_PREFIX/usr                          &&
 			cp -rv usr/include $GNU_PREFIX/usr                &&
 			#cp -Rv usr/include include/asm-generic $GNU_PREFIX/include/asm   &&
 			#cp -Rv include/linux       $GNU_PREFIX/include/linux &&
