@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
 PACKAGE=glibc			# Package information
-VERSION=2.3.6			# Version information
+VERSION=2.37			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
