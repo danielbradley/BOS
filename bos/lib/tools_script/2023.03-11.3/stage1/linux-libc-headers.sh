@@ -6,14 +6,14 @@
 SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD_DIR=$BUILD_BASE/tools/stage1	# Where this package should be built
 
-PACKAGE=linux-libc-headers	# Package information
-VERSION=2.6.12.0		# Version information
+PACKAGE=linux			# Package information
+VERSION=6.1.11			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
+ARCHIVE=tar.xz
 PKG_DIR=core/toolchain
 
 main()
@@ -22,11 +22,11 @@ main()
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
 	unpack_package &&
-	apply_patches &&
-	configure_source &&
-	compile_source &&
-	install_package &&
-	complete &&
+	#apply_patches &&
+	#configure_source &&
+	#compile_source &&
+	#install_package &&
+	#complete &&
 	echo done
 }
 
@@ -35,13 +35,14 @@ unpack_package()
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
-		cd $BUILD_DIR/$PACKAGE-$VERSION
-		cp -Rv include/asm-i386 $GNU_PREFIX/include/asm
-		cp -Rv include/linux $GNU_PREFIX/include/linux
+		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.${ARCHIVE}
+		#cd $BUILD_DIR/$PACKAGE-$VERSION
+		#make mrproper
+		#make headers
+		#cp -Rv include/asm-i386 $GNU_PREFIX/include/asm
+		#cp -Rv include/linux    $GNU_PREFIX/include/linux
 		touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
 	fi
-
 }
 
 complete()
