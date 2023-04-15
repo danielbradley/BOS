@@ -13,14 +13,15 @@ GNU_PREFIX=/tools		# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
+ARCHIVE=tar.xz
 PKG_DIR=core/toolchain
 
 main()
 {
 	echo $PACKAGE-$VERSION
 
-	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
+	download ${PACKAGE}-${VERSION}.${ARCHIVE}  &&
+	download ${PACKAGE}-${VERSION}-fhs-1.patch &&
 	unpack_package &&
 	apply_patches &&
 	configure_source &&
@@ -35,7 +36,7 @@ unpack_package()
 	if [ ! -d $BUILD_DIR/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD_DIR
-		tar -C $BUILD_DIR -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		tar -C $BUILD_DIR -xvf $SOURCE/$PACKAGE-$VERSION.${ARCHIVE}
 	fi
 }
 
@@ -46,8 +47,8 @@ apply_patches()
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
 			cd $BUILD_DIR/$PACKAGE-$VERSION                              &&
+			patch -Np1 -i $SOURCE/${PACKAGE}-${VERSION}-fhs-1.patch      &&
 			sed -i 's@/etc@/tools/etc@g' sysdeps/unix/sysv/linux/paths.h &&
-			
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
 		fi
 	fi
@@ -62,14 +63,18 @@ configure_source()
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build &&
 
+			#echo "rootsbindir=/tools/sbin" > configparms &&
+
 			../$PACKAGE-$VERSION/configure \
-				--prefix=$GNU_PREFIX \
-				--disable-profile --enable-add-ons \
-				--enable-kernel=2.6.0 \
-				--with-binutils=/tools/bin \
-				--without-gd --with-headers=/tools/include \
-				--without-selinux \
-				--sysconfdir=$GNU_PREFIX/etc &&
+				       --prefix=$GNU_PREFIX \
+				--with-binutils=$GNU_PREFIX/bin \
+				 --with-headers=$GNU_PREFIX/include \
+				   --sysconfdir=$GNU_PREFIX/etc \
+				--disable-profile \
+				--enable-add-ons \
+				--enable-kernel=3.2 \
+				--without-gd \
+				--without-selinux &&
 
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
