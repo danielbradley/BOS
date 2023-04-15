@@ -68,7 +68,7 @@ configure_source()
 			../$PACKAGE-$VERSION/configure \
 				       --prefix=$GNU_PREFIX \
 				--with-binutils=$GNU_PREFIX/bin \
-				 --with-headers=$GNU_PREFIX/include \
+				 --with-headers=$GNU_PREFIX/usr/include \
 				   --sysconfdir=$GNU_PREFIX/etc \
 				--disable-profile \
 				--enable-add-ons \
