@@ -90,8 +90,10 @@ install_package()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL ]
 		then
-			cd    $BUILD_DIR/$PACKAGE-$VERSION             &&
-			cp -rv usr/include $GNU_PREFIX/usr             &&
+			cd    $BUILD_DIR/$PACKAGE-$VERSION                &&
+			#cp -rv usr/include $GNU_PREFIX/usr               &&
+			cp -Rv include/asm-i386 $GNU_PREFIX/include/asm   &&
+			cp -Rv include/linux    $GNU_PREFIX/include/linux &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.INSTALL
 		fi
 	fi
