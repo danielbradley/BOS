@@ -7,26 +7,27 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=gzip			# Package information
-VERSION=1.3.5			# Version information
+VERSION=1.3.12			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
+ARCHIVE=tar.gz
 PKG_DIR=core/commands
+UNZIP=-z
 
 main()
 {
 	echo $PACKAGE-$VERSION
 
 	download ${PACKAGE}-${VERSION}.${ARCHIVE} &&
-	unpack_package &&
-	apply_patches &&
+	unpack_package   &&
+	apply_patches    &&
 	configure_source &&
-	compile_source &&
-	install_package &&
-	delete_package &&
+	compile_source   &&
+	install_package  &&
+	delete_package   &&
 	echo done
 }
 
@@ -35,7 +36,7 @@ unpack_package()
 	if [ ! -d $BUILD/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD &&
-		tar -C $BUILD -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		tar -C $BUILD -jxvf $SOURCE/$PACKAGE-$VERSION.$ARCHIVE $UNZIP
 	fi
 }
 
