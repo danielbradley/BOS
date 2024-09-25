@@ -45,7 +45,7 @@ apply_patches()
 	then
 		if [ ! -f $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED ]
 		then
-			cd $BUILD_DIR/$PACKAGE-$VERSION
+			cd $BUILD_DIR/$PACKAGE-$VERSION &&
 			sed -i 's@/lib/ld-linux.so.2@/system/software/lib/ld-linux.so.2@g' \
 				`grep -r -l "ld-linux" *` &&
 			touch $BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.PATCHED
@@ -62,14 +62,12 @@ configure_source()
 			mkdir -p $BUILD_DIR/$PACKAGE-build &&
 			cd $BUILD_DIR/$PACKAGE-build &&
 
-#			CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
 				--prefix=$GNU_PREFIX \
 				--libexecdir=/tools/lib \
 				--with-local-prefix=/tools \
 				--disable-nls --enable-shared \
-				--enable-languages=c
-#				--host=$CHOST --target=$CHOST &&
+				--enable-languages=c &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
