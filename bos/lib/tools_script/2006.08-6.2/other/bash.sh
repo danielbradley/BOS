@@ -13,8 +13,9 @@ GNU_PREFIX=/tools		# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
+ARCHIVE=tar.gz
 PKG_DIR=core/commands
+UNZIP=-z
 
 main()
 {
@@ -36,7 +37,7 @@ unpack_package()
 	if [ ! -d $BUILD/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD
-		tar -C $BUILD -jxvf $SOURCE/$PACKAGE-$VERSION.tar.bz2
+		tar -C $BUILD -xvf $SOURCE/$PACKAGE-$VERSION.tar.bz2 $UNZIP
 	fi
 }
 
