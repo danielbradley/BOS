@@ -69,8 +69,7 @@ configure_source()
 			#CFLAGS="-march=i386"
 			../$PACKAGE-$VERSION/configure \
 				--prefix=$GNU_PREFIX \
-				--disable-nls $CHOST
-#				--host=$CHOST --target=$CHOST &&
+				--disable-nls $CHOST &&
 			touch /$BUILD_DIR/$PACKAGE-$VERSION/SUCCESS.CONFIGURE
 		fi
 	fi
