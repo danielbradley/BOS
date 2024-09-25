@@ -36,7 +36,7 @@ unpack_package()
 	if [ ! -d $BUILD/$PACKAGE-$VERSION ]
 	then
 		mkdir -p $BUILD &&
-		tar -C $BUILD -jxvf $SOURCE/$PACKAGE-$VERSION.$ARCHIVE $UNZIP
+		tar -C $BUILD -xvf $SOURCE/$PACKAGE-$VERSION.$ARCHIVE $UNZIP
 	fi
 }
 
