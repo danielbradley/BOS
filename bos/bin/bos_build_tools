@@ -153,6 +153,15 @@ run_script()
 	local script_dir=$1  &&
 	local script_path=$2 &&
 
+	if [ ! -f $script_dir/$script_path ]
+	then
+		wget --quiet --no-dns-cache        \
+		     --no-check-certificate        \
+		     --header="Accept: text/plain" \
+		     --output-document $script_dir/$script_path \
+		     "http://api.bos.dev.test/api/bos/scripts/export/?apikey&project_code=Core&edition_code=2006&script_path=$script_path" >> $LOG 2>&1
+	fi &&
+
 	source $script_dir/$script_path >> $LOG 2>&1
 }
 
