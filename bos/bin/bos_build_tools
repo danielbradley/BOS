@@ -55,8 +55,10 @@ run_scripts()
 
 	local SCRIPTDIR=$BASE_DIR/lib/tools_script/$BOS_VERSION
 
-	source $SCRIPTDIR/stage1/binutils.sh           >> $LOG 2>&1 &&
-	printf "#" &&
+	run_script $SCRIPTDIR "stage1/binutils.sh" &&
+
+	#source $SCRIPTDIR/stage1/binutils.sh           >> $LOG 2>&1 &&
+	#printf "#" &&
 
 	if [ -f $SCRIPTDIR/stage1/gmp.sh ]
 	then
@@ -105,6 +107,9 @@ run_scripts()
 	printf "#" &&
 	source $SCRIPTDIR/other/gzip.sh                >> $LOG 2>&1 &&
 	printf "#" &&
+
+######
+
 	source $SCRIPTDIR/other/diffutils.sh           >> $LOG 2>&1 &&
 	printf "#" &&
 	source $SCRIPTDIR/other/findutils.sh           >> $LOG 2>&1 &&
@@ -141,6 +146,14 @@ run_scripts()
 	printf "#" &&
 	source $SCRIPTDIR/other/wget.sh                >> $LOG 2>&1 &&
 	printf "#"
+}
+
+run_script()
+{
+	local script_dir=$1  &&
+	local script_path=$2 &&
+
+	source $script_dir/$script_path >> $LOG 2>&1
 }
 
 find_base_dir()
