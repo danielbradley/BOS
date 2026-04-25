@@ -7,13 +7,13 @@ SOURCE=$BUILD_BASE/tools/source		# Where source packages are located
 BUILD=$BUILD_BASE/tools/other	# Where this package should be built
 
 PACKAGE=findutils		# Package information
-VERSION=4.2.23			# Version information
+VERSION=4.2.27			# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
 #CHOST=i386-pc-linux-gnu
 
-ARCHIVE=tar.bz2
+ARCHIVE=tar.gz
 PKG_DIR=core/commands
 
 main()
