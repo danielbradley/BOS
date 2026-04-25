@@ -7,7 +7,7 @@ SOURCE=$BUILD_BASE/tools/source	# Where source packages are located
 BUILD=$BUILD_BASE/tools/ted		# Where this package should be built
 
 PACKAGE=tcl						# Package information
-VERSION=8.4.12					# Version information
+VERSION=8.4.13					# Version information
 
 GNU_PREFIX=/tools		# Prefix packages are installed into
 
